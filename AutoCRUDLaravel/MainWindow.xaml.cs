@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,33 @@ namespace AutoCRUDLaravel
         public MainWindow()
         {
             InitializeComponent();
+            var dbCon = DbConnection.Instance();
+            dbCon.Server = "localhost";
+            dbCon.Port = 3306;
+            dbCon.DatabaseName = "test";
+            dbCon.Username = "root";
+            if (dbCon.Connect("")) {
+                dbCon.GetColumns("test");
+                dbCon.Close();
+            }
+        }
+
+        private void General_Click(object sender, MouseButtonEventArgs e) {
+            colorGeneral.Visibility = Visibility.Visible;
+            colorColumns.Visibility = Visibility.Hidden;
+            colorExport.Visibility = Visibility.Hidden;
+        }
+
+        private void Columns_Click(object sender, MouseButtonEventArgs e) {
+            colorGeneral.Visibility = Visibility.Hidden;
+            colorColumns.Visibility = Visibility.Visible;
+            colorExport.Visibility = Visibility.Hidden;
+        }
+
+        private void Export_Click(object sender, MouseButtonEventArgs e) {
+            colorGeneral.Visibility = Visibility.Hidden;
+            colorColumns.Visibility = Visibility.Hidden;
+            colorExport.Visibility = Visibility.Visible;
         }
     }
 }

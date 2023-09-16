@@ -13,9 +13,42 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="Auto CRUD Generator - Laravel" Height="800" Width="1200" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="stackPanelHover" TargetType="{x:Type StackPanel}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource PrimaryHueMidBrush}" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Setter Property="Background" Value="{StaticResource PrimaryHueDarkBrush}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <materialDesign:Card Padding="32" Margin="16">
-            <Button Style="{StaticResource MaterialDesignOutlinedButton}">test</Button>
-        </materialDesign:Card>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Grid.Column="0" Width="225px" Background="{StaticResource PrimaryHueDarkBrush}">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,30,0,0" Style="{StaticResource stackPanelHover}" PreviewMouseDown="General_Click">
+                <materialDesign:ColorZone Mode="Light" Height="41" Width="3" Visibility="Visible" x:Name="colorGeneral"/>
+                <materialDesign:PackIcon Foreground="{StaticResource MaterialDesignPaper}" Width="18" Height="18" Kind="Database" Margin="15,12,15,0"/>
+                <TextBlock Text="Geral" Foreground="{StaticResource MaterialDesignPaper}" Padding="0,10,0,10" FontSize="18"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Style="{StaticResource stackPanelHover}" PreviewMouseDown="Columns_Click">
+                <materialDesign:ColorZone Mode="Light" Height="41" Width="3" Visibility="Hidden" x:Name="colorColumns"/>
+                <materialDesign:PackIcon Width="18" Height="18" Kind="Grid" Foreground="{StaticResource MaterialDesignPaper}" Margin="15,12,15,0"/>
+                <TextBlock Foreground="{StaticResource MaterialDesignPaper}" Padding="0,10,0,10" Text="Colunas" FontSize="18"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Style="{StaticResource stackPanelHover}" PreviewMouseDown="Export_Click">
+                <materialDesign:ColorZone Mode="Light" Height="41" Width="3" Visibility="Hidden" x:Name="colorExport"/>
+                <materialDesign:PackIcon Width="18" Height="18" Foreground="{StaticResource MaterialDesignPaper}" Kind="Download" Margin="15,12,15,0"/>
+                <TextBlock Text="Exportação" Foreground="{StaticResource MaterialDesignPaper}" Padding="0,10,0,10" FontSize="18"/>
+            </StackPanel>
+        </StackPanel>
+
+        <ContentControl x:Name="content" Grid.Column="1"/>
     </Grid>
 </Window>

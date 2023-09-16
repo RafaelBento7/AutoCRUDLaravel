@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace AutoCRUDLaravel {
     internal enum ColumnType {
+        NONE,
         DOUBLE,
+        FLOAT,
         INT,
         VARCHAR,
+        DATE,
         DATETIME,
         TIME,
         SELECT_OPTION,
