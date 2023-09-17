@@ -12,7 +12,7 @@
              TextOptions.TextRenderingMode="Auto"
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}"
-             d:DesignHeight="700" d:DesignWidth="975">
+             d:DesignHeight="650" d:DesignWidth="975">
     <Grid>
             
     </Grid>

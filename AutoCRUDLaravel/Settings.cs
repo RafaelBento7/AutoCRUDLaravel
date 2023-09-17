@@ -18,6 +18,7 @@ namespace AutoCRUDLaravel {
         public static bool GenerateIndex { get; set; }
         public static bool GenerateShow { get; set; }
         public static bool GenerateEdit { get; set; }
+        public static bool GenerateCreate { get; set; }
         public static bool ShowDeleteButtonIndex { get; set; }
         public static bool ShowEditButtonIndex { get; set; }
         public static bool ShowShowButtonIndex { get; set; }
@@ -38,7 +39,7 @@ namespace AutoCRUDLaravel {
         }
 
         public static void Save(string server, string port, string username, string database,
-                                bool generateIndex, bool generateShow, bool generateEdit,
+                                bool generateIndex, bool generateShow, bool generateEdit, bool generateCreate,
                                 bool showDeleteButton, bool showEditButton, bool showShowButton,
                                 bool visibleIndex, bool visibleEdit, bool visibleCreate, bool visibleShow) {
             if (!File.Exists(Environment.CurrentDirectory + @"\config.ini"))
@@ -53,6 +54,7 @@ namespace AutoCRUDLaravel {
                 data["General"]["GenerateIndex"] = generateIndex.ToString();
                 data["General"]["GenerateShow"] = generateShow.ToString();
                 data["General"]["GenerateEdit"] = generateEdit.ToString();
+                data["General"]["GenerateCreate"] = generateCreate.ToString();
                 data["General"]["ShowDeleteButton"] = showDeleteButton.ToString();
                 data["General"]["ShowEditButton"] = showEditButton.ToString();
                 data["General"]["ShowShowButton"] = showShowButton.ToString();
@@ -61,6 +63,8 @@ namespace AutoCRUDLaravel {
                 data["General"]["VisibleCreate"] = visibleCreate.ToString();
                 data["General"]["VisibleShow"] = visibleShow.ToString();
                 parser.WriteFile("config.ini", data);
+                Load();
+                MessageBox.Show($"Settings Saved!");
             } catch (Exception ex) {
                 MessageBox.Show($"Error Saving.\nError:{ex.Message}");
             }
@@ -82,6 +86,7 @@ namespace AutoCRUDLaravel {
                 GenerateIndex = data["General"]["GenerateIndex"].ToBoolean();
                 GenerateShow = data["General"]["GenerateShow"].ToBoolean();
                 GenerateEdit = data["General"]["GenerateEdit"].ToBoolean();
+                GenerateCreate = data["General"]["GenerateCreate"].ToBoolean();
                 ShowDeleteButtonIndex = data["General"]["ShowDeleteButton"].ToBoolean();
                 ShowEditButtonIndex = data["General"]["ShowEditButton"].ToBoolean();
                 ShowShowButtonIndex = data["General"]["ShowShowButton"].ToBoolean();

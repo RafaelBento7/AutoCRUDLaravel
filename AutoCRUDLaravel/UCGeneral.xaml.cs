@@ -31,6 +31,7 @@ namespace AutoCRUDLaravel {
                 cbGenerateIndex.IsChecked = Settings.GenerateIndex;
                 cbGenerateEdit.IsChecked = Settings.GenerateEdit;
                 cbGenerateShow.IsChecked = Settings.GenerateShow;
+                cbGenerateCreate.IsChecked = Settings.GenerateCreate;
                 cbDisplayButtonShow.IsChecked = Settings.ShowShowButtonIndex;
                 cbDisplayButtonEdit.IsChecked = Settings.ShowEditButtonIndex;
                 cbDisplayButtonDelete.IsChecked = Settings.ShowDeleteButtonIndex;
