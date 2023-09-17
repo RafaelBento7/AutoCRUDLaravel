@@ -37,7 +37,7 @@ namespace AutoCRUDLaravel {
                 cbVisibleIndex.IsChecked = Settings.IsVisibleIndex;
                 cbVisibleEdit.IsChecked = Settings.IsVisibleEdit;
                 cbVisibleShow.IsChecked = Settings.IsVisibleShow;
-                cbVisibleCreate.IsChecked= Settings.IsVisibleCreate;
+                cbVisibleCreate.IsChecked = Settings.IsVisibleCreate;
             };
         }
 
@@ -72,7 +72,7 @@ namespace AutoCRUDLaravel {
 
         private void UpdateTables_Click(object sender, RoutedEventArgs e) {
             var (tables, errorMessage) = DbConnection.Instance().GetTables();
-            
+
 
             if (tables == null) {
                 SnackbarError.MessageQueue.Enqueue(errorMessage);
