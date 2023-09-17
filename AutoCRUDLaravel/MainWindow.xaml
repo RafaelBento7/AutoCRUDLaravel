@@ -12,7 +12,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Auto CRUD Generator - Laravel" Height="800" Width="1200" WindowStartupLocation="CenterScreen">
+        Title="Auto CRUD Generator - Laravel" Height="700" Width="1200" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="stackPanelHover" TargetType="{x:Type StackPanel}">
             <Style.Triggers>
@@ -25,30 +25,50 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        
-        <StackPanel Grid.Column="0" Width="225px" Background="{StaticResource PrimaryHueDarkBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Column="0" Width="225px" Background="{StaticResource PrimaryHueDarkBrush}" Grid.RowSpan="2">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,30,0,0" Style="{StaticResource stackPanelHover}" PreviewMouseDown="General_Click">
                 <materialDesign:ColorZone Mode="Light" Height="41" Width="3" Visibility="Visible" x:Name="colorGeneral"/>
                 <materialDesign:PackIcon Foreground="{StaticResource MaterialDesignPaper}" Width="18" Height="18" Kind="Database" Margin="15,12,15,0"/>
-                <TextBlock Text="Geral" Foreground="{StaticResource MaterialDesignPaper}" Padding="0,10,0,10" FontSize="18"/>
+                <TextBlock Text="General" Foreground="{StaticResource MaterialDesignPaper}" Padding="0,10,0,10" FontSize="18"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Style="{StaticResource stackPanelHover}" PreviewMouseDown="Columns_Click">
                 <materialDesign:ColorZone Mode="Light" Height="41" Width="3" Visibility="Hidden" x:Name="colorColumns"/>
                 <materialDesign:PackIcon Width="18" Height="18" Kind="Grid" Foreground="{StaticResource MaterialDesignPaper}" Margin="15,12,15,0"/>
-                <TextBlock Foreground="{StaticResource MaterialDesignPaper}" Padding="0,10,0,10" Text="Colunas" FontSize="18"/>
+                <TextBlock Foreground="{StaticResource MaterialDesignPaper}" Padding="0,10,0,10" Text="Columns" FontSize="18"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Style="{StaticResource stackPanelHover}" PreviewMouseDown="Export_Click">
                 <materialDesign:ColorZone Mode="Light" Height="41" Width="3" Visibility="Hidden" x:Name="colorExport"/>
                 <materialDesign:PackIcon Width="18" Height="18" Foreground="{StaticResource MaterialDesignPaper}" Kind="Download" Margin="15,12,15,0"/>
-                <TextBlock Text="Exportação" Foreground="{StaticResource MaterialDesignPaper}" Padding="0,10,0,10" FontSize="18"/>
+                <TextBlock Text="Export" Foreground="{StaticResource MaterialDesignPaper}" Padding="0,10,0,10" FontSize="18"/>
             </StackPanel>
         </StackPanel>
 
         <ContentControl x:Name="content" Grid.Column="1"/>
+
+        <Button Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Width="200" Margin="20,0,0,20" Style="{StaticResource MaterialDesignOutlinedButton}" Click="Save_Click" x:Name="btSave"
+                ToolTipService.ToolTip="The password wont be saved!" ToolTipService.IsEnabled="True">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="ContentSave" Margin="0,0,5,0"/>
+                <TextBlock Text="Save"/>
+            </StackPanel>
+        </Button>
+
+        <Button Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Foreground="{StaticResource MaterialDesignPaper}" Width="200" Margin="0,0,20,20">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Next"/>
+                <materialDesign:PackIcon Kind="ArrowRightBoldOutline" Margin="5,0,0,0"/>
+            </StackPanel>
+        </Button>
     </Grid>
 </Window>

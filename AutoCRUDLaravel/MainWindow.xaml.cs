@@ -24,15 +24,8 @@ namespace AutoCRUDLaravel
         public MainWindow()
         {
             InitializeComponent();
-            var dbCon = DbConnection.Instance();
-            dbCon.Server = "localhost";
-            dbCon.Port = 3306;
-            dbCon.DatabaseName = "test";
-            dbCon.Username = "root";
-            if (dbCon.Connect("")) {
-                dbCon.GetColumns("test");
-                dbCon.Close();
-            }
+            Settings.Load();
+            content.Content = new UCGeneral();
         }
 
         private void General_Click(object sender, MouseButtonEventArgs e) {
@@ -51,6 +44,16 @@ namespace AutoCRUDLaravel
             colorGeneral.Visibility = Visibility.Hidden;
             colorColumns.Visibility = Visibility.Hidden;
             colorExport.Visibility = Visibility.Visible;
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e) {
+            if (!(content.Content is UCGeneral))
+                return; 
+            
+            Settings.Save(((UCGeneral)content.Content).tbServer.Text, ((UCGeneral)content.Content).tbPort.Text, ((UCGeneral)content.Content).tbUsername.Text, ((UCGeneral)content.Content).tbDatabase.Text,
+                          ((UCGeneral)content.Content).cbGenerateIndex.IsChecked == true, ((UCGeneral)content.Content).cbGenerateShow.IsChecked == true, ((UCGeneral)content.Content).cbGenerateEdit.IsChecked == true,
+                          ((UCGeneral)content.Content).cbDisplayButtonDelete.IsChecked == true, ((UCGeneral)content.Content).cbDisplayButtonEdit.IsChecked == true, ((UCGeneral)content.Content).cbDisplayButtonShow.IsChecked == true,
+                          ((UCGeneral)content.Content).cbVisibleIndex.IsChecked == true, ((UCGeneral)content.Content).cbVisibleEdit.IsChecked == true, ((UCGeneral)content.Content).cbVisibleCreate.IsChecked == true, ((UCGeneral)content.Content).cbVisibleShow.IsChecked == true);
         }
     }
 }

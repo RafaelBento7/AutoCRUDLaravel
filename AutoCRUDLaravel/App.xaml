@@ -9,8 +9,20 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.LightBlue.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.DeepOrange.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Amber.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
+            <Style x:Key="SmallOutlinedTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+                <Setter Property="Padding" Value="10"/>
+            </Style>
+
+            <Style x:Key="SmallOutlinedPasswordBox" TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource MaterialDesignOutlinedRevealPasswordBox}">
+                <Setter Property="Padding" Value="10"/>
+            </Style>
+
+            <Style x:Key="SmallOutlinedComboBox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MaterialDesignOutlinedComboBox}">
+                <Setter Property="Padding" Value="10"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

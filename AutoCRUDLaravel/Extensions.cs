@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace AutoCRUDLaravel {
     internal static class Extensions {
         internal static int ToInt(this string value) {
-            if (Int32.TryParse(value, out int result))
+            if (int.TryParse(value, out int result))
                 return result;
             return 0;
         }
@@ -65,6 +65,16 @@ namespace AutoCRUDLaravel {
                 default:
                     return ColumnType.NONE;
             }
+        }
+
+        internal static bool IsNumeric(this string value) {
+            int len = value.Length;
+            for (int i = 0; i < len; ++i) {
+                char c = value[i];
+                if (c < '0' || c > '9')
+                    return false;
+            }
+            return true;
         }
     }
 }

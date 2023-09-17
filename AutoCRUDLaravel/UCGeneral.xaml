@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:AutoCRUDLaravel"
              mc:Ignorable="d" 
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -12,8 +13,134 @@
              TextOptions.TextRenderingMode="Auto"
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}"
-             d:DesignHeight="800" d:DesignWidth="975">
-    <Grid>
-            
+             d:DesignHeight="650" d:DesignWidth="975">
+    <UserControl.Resources>
+        <Style x:Key="VerticalSeparatorStyle" 
+       TargetType="{x:Type Separator}"
+       BasedOn="{StaticResource {x:Type Separator}}">
+            <Setter Property="Margin" Value="6,0,6,0"/>
+            <Setter Property="LayoutTransform">
+                <Setter.Value>
+                    <TransformGroup>
+                        <TransformGroup.Children>
+                            <TransformCollection>
+                                <RotateTransform Angle="90"/>
+                            </TransformCollection>
+                        </TransformGroup.Children>
+                    </TransformGroup>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <materialDesign:Card Grid.Row="0" Padding="10">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Grid.Row="0" FontSize="24" Text="Database"/>
+                <Separator Margin="0,5,0,0"/>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Server:" VerticalAlignment="Center" Margin="0,20,0,0"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbServer" Width="200" Margin="10,20,0,0" Style="{StaticResource SmallOutlinedTextBox}" materialDesign:HintAssist.Hint="Server"/>
+
+                    <TextBlock Grid.Row="0" Grid.Column="2" Text="Port:" VerticalAlignment="Center" Margin="30,20,0,0"/>
+                    <TextBox Grid.Row="0" Grid.Column="3" x:Name="tbPort" Width="70" HorizontalAlignment="Left" Margin="10,20,0,0" Style="{StaticResource SmallOutlinedTextBox}" materialDesign:HintAssist.Hint="Port"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Username:" VerticalAlignment="Center" Margin="0,15,0,0"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbUsername" Width="200" Margin="10,15,0,0" Style="{StaticResource SmallOutlinedTextBox}" materialDesign:HintAssist.Hint="Username" />
+
+                    <TextBlock Grid.Row="1" Grid.Column="2" Text="Password:" VerticalAlignment="Center" Margin="30,15,0,0"/>
+                    <PasswordBox Grid.Row="1" Grid.Column="3" x:Name="tbPassword" Width="200" Margin="10,15,0,0" materialDesign:HintAssist.Hint="Password" HorizontalAlignment="Left" Style="{StaticResource SmallOutlinedPasswordBox}"/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Database:" VerticalAlignment="Center" Margin="0,15,0,0"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" x:Name="tbDatabase" Width="200" Margin="10,15,0,0" Style="{StaticResource SmallOutlinedTextBox}" materialDesign:HintAssist.Hint="Database Name"/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="2" Text="Table:" VerticalAlignment="Center" Margin="30,15,0,0"/>
+                    <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Margin="10,15,0,0" ToolTipService.ToolTip="Teste a Ligação Primeiro" ToolTipService.IsEnabled="True" ToolTipService.ShowOnDisabled="True">
+                        <ComboBox x:Name="tbTable" Width="200"  Style="{StaticResource SmallOutlinedComboBox}" IsEnabled="False" materialDesign:HintAssist.Hint="Select a Table" />
+                        <Button x:Name="btUpdateTables" Style="{StaticResource MaterialDesignIconButton}" Width="25" Height="25" Margin="5,0,0,0" IsEnabled="False" 
+                                ToolTipService.IsEnabled="True" ToolTipService.ToolTip="Atualizar lista de tabelas" Cursor="Hand" Click="UpdateTables_Click">
+                            <materialDesign:PackIcon Kind="Refresh"/>
+                        </Button>
+                    </StackPanel>
+
+                    <Button Grid.Column="4" Grid.RowSpan="3" Width="200" Height="40" Foreground="{StaticResource MaterialDesignPaper}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="Connect_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="DatabaseSync" Margin="0,0,5,0"/>
+                            <TextBlock Text="Test Connection"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </materialDesign:Card>
+
+        <materialDesign:Card Grid.Row="1" Padding="10" Margin="0,20,0,0">
+            <StackPanel Grid.Row="2">
+                <TextBlock Grid.Row="0" FontSize="24" Text="General Settings"/>
+                <Separator Margin="0,5,0,0"/>
+
+                <Grid Margin="0,20,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Grid.Row="0" FontSize="15" Text="Generate Views:" Margin="0,0,20,0"/>
+                    <CheckBox Grid.Column="0" Grid.Row="1" x:Name="cbGenerateIndex" Content="Index" Margin="0,5,0,0"/>
+                    <CheckBox Grid.Column="0" Grid.Row="2" x:Name="cbGenerateEdit" Content="Edit" Margin="0,5,0,0"/>
+                    <CheckBox Grid.Column="0" Grid.Row="3" x:Name="cbGenerateShow" Content="Show" Margin="0,5,0,0"/>
+
+                    <Separator Grid.RowSpan="5" Grid.Column="1" Style="{DynamicResource VerticalSeparatorStyle}" Opacity="0.7"/>
+
+                    <TextBlock Grid.Column="2" Grid.Row="0" FontSize="15" Text="Buttons Displayed on Index View:" Margin="20,0,20,0"/>
+                    <CheckBox Grid.Column="2" Grid.Row="1" x:Name="cbDisplayButtonShow" Content="Show" Margin="20,5,0,0"/>
+                    <CheckBox Grid.Column="2" Grid.Row="2" x:Name="cbDisplayButtonEdit" Content="Edit" Margin="20,5,0,0"/>
+                    <CheckBox Grid.Column="2" Grid.Row="3" x:Name="cbDisplayButtonDelete" Content="Delete" Margin="20,5,0,0"/>
+
+                    <Separator Grid.RowSpan="5" Grid.Column="3" Style="{DynamicResource VerticalSeparatorStyle}" Opacity="0.7"/>
+
+                    <TextBlock Grid.Column="4" Grid.Row="0" FontSize="15" Margin="20,0,0,0" Text="Auto Set Display Columns in:"/>
+                    <CheckBox Grid.Column="4" Grid.Row="1" x:Name="cbVisibleIndex" Content="Index" Margin="20,5,20,0"/>
+                    <CheckBox Grid.Column="4" Grid.Row="2" x:Name="cbVisibleCreate" Content="Create" Margin="20,5,20,0"/>
+                    <CheckBox Grid.Column="4" Grid.Row="3" x:Name="cbVisibleEdit" Content="Edit" Margin="20,5,20,0"/>
+                    <CheckBox Grid.Column="4" Grid.Row="4" x:Name="cbVisibleShow" Content="Show" Margin="20,5,20,0"/>
+                </Grid>
+            </StackPanel>
+        </materialDesign:Card>
+
+        <materialDesign:Snackbar Grid.Row="3" Margin="0,0,0,20" IsActive="False" x:Name="SnackbarError" Background="Red"
+                                    MessageQueue="{materialDesign:MessageQueue}"/>
+        <materialDesign:Snackbar Grid.Row="3" Margin="0,0,0,20" IsActive="False" x:Name="SnackbarSuccess" Background="Green"
+                            MessageQueue="{materialDesign:MessageQueue}"/>
     </Grid>
 </UserControl>
