@@ -81,7 +81,7 @@
 
                     <TextBlock Grid.Row="2" Grid.Column="2" Text="Table:" VerticalAlignment="Center" Margin="30,15,0,0"/>
                     <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Margin="10,15,0,0" ToolTipService.ToolTip="Teste a Ligação Primeiro" ToolTipService.IsEnabled="True" ToolTipService.ShowOnDisabled="True">
-                        <ComboBox x:Name="tbTable" Width="200"  Style="{StaticResource SmallOutlinedComboBox}" IsEnabled="False" materialDesign:HintAssist.Hint="Select a Table" />
+                        <ComboBox x:Name="cbTable" Width="200"  Style="{StaticResource SmallOutlinedComboBox}" IsEnabled="False" materialDesign:HintAssist.Hint="Select a Table" />
                         <Button x:Name="btUpdateTables" Style="{StaticResource MaterialDesignIconButton}" Width="25" Height="25" Margin="5,0,0,0" IsEnabled="False" 
                                 ToolTipService.IsEnabled="True" ToolTipService.ToolTip="Atualizar lista de tabelas" Cursor="Hand" Click="UpdateTables_Click">
                             <materialDesign:PackIcon Kind="Refresh"/>

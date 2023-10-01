@@ -64,7 +64,23 @@
             </StackPanel>
         </Button>
 
-        <Button Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Foreground="{StaticResource MaterialDesignPaper}" Width="200" Margin="0,0,20,20">
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="20,0,0,20">
+            <Button Grid.Row="2" x:Name="btAddColumn" HorizontalAlignment="Left" Width="200" Foreground="White" Visibility="Collapsed">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Add" Margin="0,0,5,0"/>
+                    <TextBlock Text="Add Column"/>
+                </StackPanel>
+            </Button>
+
+            <Button Grid.Row="2" x:Name="btExportJson" HorizontalAlignment="Right" Width="200" Margin="10,0,0,0" Style="{StaticResource MaterialDesignOutlinedButton}" Visibility="Collapsed">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="FileExport" Margin="0,0,5,0"/>
+                    <TextBlock Text="Export JSON"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <Button Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Foreground="{StaticResource MaterialDesignPaper}" Width="200" Margin="0,0,20,20" Click="Next_Click">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Next"/>
                 <materialDesign:PackIcon Kind="ArrowRightBoldOutline" Margin="5,0,0,0"/>

@@ -41,29 +41,30 @@ namespace AutoCRUDLaravel {
 
         internal static ColumnType ToColumnType(this string value) {
             if (string.IsNullOrEmpty(value))
-                return ColumnType.NONE;
+                return ColumnType.GetColumnType(ColumnType.TypeEnum.NONE);
 
             switch (value.ToUpper()) {
                 case "VARCHAR":
-                    return ColumnType.VARCHAR;
+                    return ColumnType.GetColumnType(ColumnType.TypeEnum.TEXT);
                 case "FLOAT":
-                    return ColumnType.FLOAT;
                 case "DOUBLE":
-                    return ColumnType.DOUBLE;
+                    return ColumnType.GetColumnType(ColumnType.TypeEnum.NUMERIC_INT);
                 case "SELECT":
-                    return ColumnType.SELECT_OPTION;
+                    return ColumnType.GetColumnType(ColumnType.TypeEnum.SELECT_ARRAY);
+                case "ENUM":
+                    return ColumnType.GetColumnType(ColumnType.TypeEnum.SELECT_ENUM);
                 case "DATETIME":
-                    return ColumnType.DATETIME;
+                    return ColumnType.GetColumnType(ColumnType.TypeEnum.DATETIME);
                 case "DATE":
-                    return ColumnType.DATE;
+                    return ColumnType.GetColumnType(ColumnType.TypeEnum.DATE);
                 case "TIME":
-                    return ColumnType.TIME;
+                    return ColumnType.GetColumnType(ColumnType.TypeEnum.TIME);
                 case "INT":
-                    return ColumnType.INT;
+                    return ColumnType.GetColumnType(ColumnType.TypeEnum.NUMERIC_INT);
                 case "TINYINT":
-                    return ColumnType.BOOLEAN;
+                    return ColumnType.GetColumnType(ColumnType.TypeEnum.BOOLEAN);
                 default:
-                    return ColumnType.NONE;
+                    return ColumnType.GetColumnType(ColumnType.TypeEnum.NONE);
             }
         }
 

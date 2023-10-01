@@ -19,6 +19,8 @@ namespace AutoCRUDLaravel {
     /// Interação lógica para UCGeneral.xam
     /// </summary>
     public partial class UCGeneral : UserControl {
+        public string Table { get { return cbTable.Text; } }
+
         public UCGeneral() {
             InitializeComponent();
             this.Loaded += (sender, e) => {
@@ -57,23 +59,22 @@ namespace AutoCRUDLaravel {
 
             (bool isConnected, string errorConnecting) = connection.Connect(tbPassword.Password);
             if (isConnected) {
-                tbTable.IsEnabled = true;
+                cbTable.IsEnabled = true;
                 btUpdateTables.IsEnabled = true;
-                tbTable.ItemsSource = null;
+                cbTable.ItemsSource = null;
                 SnackbarSuccess.MessageQueue = new SnackbarMessageQueue(TimeSpan.FromSeconds(3));
                 SnackbarSuccess.MessageQueue.Enqueue("Connected");
                 UpdateTables_Click(btUpdateTables, null);
             } else {
-                tbTable.IsEnabled = false;
+                cbTable.IsEnabled = false;
                 btUpdateTables.IsEnabled = false;
-                tbTable.ItemsSource = null;
+                cbTable.ItemsSource = null;
                 SnackbarError.MessageQueue.Enqueue(errorConnecting);
             }
         }
 
         private void UpdateTables_Click(object sender, RoutedEventArgs e) {
             var (tables, errorMessage) = DbConnection.Instance().GetTables();
-
 
             if (tables == null) {
                 SnackbarError.MessageQueue.Enqueue(errorMessage);
@@ -85,8 +86,8 @@ namespace AutoCRUDLaravel {
                 return;
             }
 
-            tbTable.ItemsSource = null;
-            tbTable.ItemsSource = tables;
+            cbTable.ItemsSource = null;
+            cbTable.ItemsSource = tables;
         }
     }
 }

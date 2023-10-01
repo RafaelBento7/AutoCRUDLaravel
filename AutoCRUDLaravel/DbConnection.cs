@@ -71,7 +71,7 @@ namespace AutoCRUDLaravel {
                                 DefaultValue = reader["COLUMN_DEFAULT"].ToString(),
                                 IsNullable = reader["IS_NULLABLE"].ToString().ToBoolean(),
                                 Type = reader["DATA_TYPE"].ToString().ToColumnType(),
-                                MaxSize = reader["CHARACTER_MAXIMUM_LENGTH"].ToString().ToUShort(),
+                                MaxLength = reader["CHARACTER_MAXIMUM_LENGTH"].ToString().ToUShort(),
                                 PlaceHolder = reader["COLUMN_NAME"].ToString(),
                             };
 
@@ -87,7 +87,7 @@ namespace AutoCRUDLaravel {
                             } else if (columnKey.ToUpper() == "MUL" || (!string.IsNullOrEmpty(column.Name) && column.Name.ToUpper().EndsWith("_ID"))) {
                                 column.IsPrimaryKey = false;
                                 column.IsForeignKey = true;
-                                column.Type = ColumnType.SELECT_OPTION;
+                                column.Type = ColumnType.GetColumnType(ColumnType.TypeEnum.SELECT_ARRAY);
                             }
 
                             string columnName = reader["COLUMN_NAME"].ToString();

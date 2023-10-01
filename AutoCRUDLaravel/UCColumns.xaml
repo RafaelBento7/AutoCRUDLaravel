@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AutoCRUDLaravel"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              TextElement.FontWeight="Regular"
@@ -13,7 +14,171 @@
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}"
              d:DesignHeight="650" d:DesignWidth="975">
+
+    <UserControl.Resources>
+        <!--<Style TargetType="DataGridCell" BasedOn="{StaticResource MaterialDesignDataGridCell}" x:Key="ButtonColumn">
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                        <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>-->
+    </UserControl.Resources>
+
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MaxWidth="660"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <materialDesign:Card Margin="20,20,0,20" Padding="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <WrapPanel Grid.Row="0" Orientation="Horizontal">
+                    <TextBlock x:Name="tbDatabase" Text="Database" FontSize="18"/>
+                    <TextBlock Text=" - " FontSize="18"/>
+                    <TextBlock x:Name="tbUsername" Text="username" FontSize="18"/>
+                    <TextBlock Text=" - " FontSize="18"/>
+                    <TextBlock x:Name="tbTable" Text="test" FontSize="18"/>
+                </WrapPanel>
+
+                <DataGrid x:Name="dgColumns" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" AutoGenerateColumns="False" 
+                      CanUserSortColumns="False" CanUserReorderColumns="True" CanUserAddRows="False" Margin="0,10,0,0" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Width="50" >
+                            <DataGridTemplateColumn.CellStyle>
+                                <Style TargetType="DataGridCell" BasedOn="{StaticResource MaterialDesignDataGridCell}">
+                                    <Setter Property="Padding" Value="0"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                                <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                                                    <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </DataGridTemplateColumn.CellStyle>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Click="Show_Click" Style="{StaticResource MaterialDesignIconButton}" Width="30" Height="30">
+                                        <materialDesign:PackIcon Kind="Eye" Width="30" Height="24"/>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
+                        <DataGridCheckBoxColumn Header="Nullable" Binding="{Binding IsNullable}"/>
+                        <DataGridCheckBoxColumn Binding="{Binding IsVisibleIndex}">
+                            <DataGridCheckBoxColumn.Header>
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock HorizontalAlignment="Center" Text="Visible"/>
+                                    <TextBlock HorizontalAlignment="Center" Text="Index"/>
+                                </StackPanel>
+                            </DataGridCheckBoxColumn.Header>
+                        </DataGridCheckBoxColumn>
+                        <DataGridCheckBoxColumn Binding="{Binding IsVisibleEdit}">
+                            <DataGridCheckBoxColumn.Header>
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock HorizontalAlignment="Center" Text="Visible"/>
+                                    <TextBlock HorizontalAlignment="Center" Text="Edit"/>
+                                </StackPanel>
+                            </DataGridCheckBoxColumn.Header>
+                        </DataGridCheckBoxColumn>
+                        <DataGridCheckBoxColumn Binding="{Binding IsVisibleCreate}">
+                            <DataGridCheckBoxColumn.Header>
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock HorizontalAlignment="Center" Text="Visible"/>
+                                    <TextBlock HorizontalAlignment="Center" Text="Create"/>
+                                </StackPanel>
+                            </DataGridCheckBoxColumn.Header>
+                        </DataGridCheckBoxColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </materialDesign:Card>
+
+        <materialDesign:Card Grid.Column="1" Margin="10,20,20,20">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ScrollViewer  Grid.Row="0">
+                    <StackPanel Margin="20,20,20,20">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Field - " FontSize="16"/>
+                            <TextBlock Text="" x:Name="lblName" FontSize="16" FontWeight="Bold"/>
+                        </StackPanel>
+
+                        <TextBlock Text="Field Visibility" x:Name="lblVisibility" Margin="0,10,0,0"/>
+                        <CheckBox Content="Visible on Create" Margin="0,10,0,0" x:Name="cbVisibleCreate"/>
+                        <CheckBox Content="Visible on Index" x:Name="cbVisibleIndex"/>
+                        <CheckBox Content="Visible on Edit" x:Name="cbVisibleEdit"/>
+                        <CheckBox Content="Visible on Show" x:Name="cbVisibleShow"/>
+
+                        <TextBlock Text="Field Title" x:Name="lblTitle" Margin="0,10,0,0"/>
+                        <TextBox x:Name="tbFieldTitle" Margin="0,10,0,0" Style="{StaticResource SmallOutlinedTextBox}" materialDesign:HintAssist.Hint="Field Title" materialDesign:HintAssist.IsFloating="False"/>
+
+                        <TextBlock Text="Placeholder" x:Name="lblPlaceHolder" Margin="0,10,0,0"/>
+                        <TextBox x:Name="tbPlaceholder" Margin="0,10,0,0" Style="{StaticResource SmallOutlinedTextBox}" materialDesign:HintAssist.Hint="Placeholder" materialDesign:HintAssist.IsFloating="False"/>
+
+                        <TextBlock Text="Type" x:Name="lblType" Margin="0,10,0,0"/>
+                        <ComboBox x:Name="cbType" Margin="0,10,0,0" Style="{StaticResource SmallOutlinedComboBox}" materialDesign:HintAssist.Hint="Type" SelectionChanged="cbType_SelectionChanged" materialDesign:HintAssist.IsFloating="False"/>
+
+                        <CheckBox Content="Nullable" x:Name="cbNullable" Margin="0,10,0,0"/>
+
+                        <!-- Number Fields -->
+                        <CheckBox Content="Unsigned" x:Name="cbUnsigned" Margin="0,10,0,0"/>
+                        <!-- End of Number Fields -->
+
+                        <!-- Not Select Fields -->
+                        <TextBlock Text="Default Value" x:Name="lblDefaultValue" Margin="0,10,0,0"/>
+                        <TextBox x:Name="tbDefaultValue" Margin="0,10,0,0" Style="{StaticResource SmallOutlinedTextBox}" materialDesign:HintAssist.Hint="Default Value" materialDesign:HintAssist.IsFloating="False"/>
+                        <!-- End of Not Select Fields -->
+
+                        <!-- Text Fields -->
+                        <TextBlock Text="Max Length" x:Name="lblMaxLength" Margin="0,10,0,0"/>
+                        <TextBox x:Name="tbMaxLength" Margin="0,10,0,0" Style="{StaticResource SmallOutlinedTextBox}" materialDesign:HintAssist.Hint="Max Length" materialDesign:HintAssist.IsFloating="False"/>
+                        <!-- End of Text Fields -->
+
+                        <!-- Select Enum Fields -->
+                        <StackPanel x:Name="lblSelectEnum" Orientation="Horizontal">
+                            <TextBlock Text="Enum elements"  Margin="0,10,0,0"/>
+                            <materialDesign:PackIcon Kind="Info" Margin="3,10,0,0" ToolTip="Separate multiple values with ';', for example 'Value1;Value2;Value3'"/>
+                        </StackPanel>
+                        <TextBox x:Name="tbSelectEnum" Margin="0,10,0,0" Style="{StaticResource SmallOutlinedTextBox}" materialDesign:HintAssist.Hint="Value1;Value2;Value3" materialDesign:HintAssist.IsFloating="False"/>
+                        <!-- End of Select Enum Fields -->
+
+                        <!-- Select Array -->
+                        <StackPanel Orientation="Horizontal" x:Name="lblSelectArray">
+                            <TextBlock Text="Select Values Function" Margin="0,10,0,0"/>
+                            <materialDesign:PackIcon Kind="Info" Margin="3,10,0,0" ToolTip="What you field in the input will be used to get the values to the select, for example fielding the input with User::getUsers() will be used internally '$selectItems = User::getUsers();'"/>
+                        </StackPanel>
+                        <TextBox x:Name="tbSelectArray" Margin="0,10,0,0" Style="{StaticResource SmallOutlinedTextBox}" materialDesign:HintAssist.Hint="Select Values Function" materialDesign:HintAssist.IsFloating="False"/>
+                        <!-- End of Select Array -->
+
+                        <!--DATE FORMAT-->
+                        <TextBlock Text="Date Format" x:Name="lblDateFormat" Margin="0,10,0,0"/>
+                        <TextBox x:Name="tbDateFormat" Margin="0,10,0,0" Style="{StaticResource SmallOutlinedTextBox}" materialDesign:HintAssist.Hint="Date Format" materialDesign:HintAssist.IsFloating="False"/>
+                        <!-- End of DATE FORMAT -->
+                    </StackPanel>
+                </ScrollViewer>
+                <Button Grid.Row="2" Margin="0,0,0,0" Content="Update Column" Foreground="{StaticResource MaterialDesignPaper}" Click="Update_Click"/>
+            </Grid>
+
+        </materialDesign:Card>
     </Grid>
 </UserControl>
