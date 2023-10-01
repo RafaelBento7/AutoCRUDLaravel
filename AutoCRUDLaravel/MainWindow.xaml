@@ -37,17 +37,17 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="0" Width="225px" Background="{StaticResource PrimaryHueDarkBrush}" Grid.RowSpan="2">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,30,0,0" Style="{StaticResource stackPanelHover}" PreviewMouseDown="General_Click">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,30,0,0" Style="{StaticResource stackPanelHover}">
                 <materialDesign:ColorZone Mode="Light" Height="41" Width="3" Visibility="Visible" x:Name="colorGeneral"/>
                 <materialDesign:PackIcon Foreground="{StaticResource MaterialDesignPaper}" Width="18" Height="18" Kind="Database" Margin="15,12,15,0"/>
                 <TextBlock Text="General" Foreground="{StaticResource MaterialDesignPaper}" Padding="0,10,0,10" FontSize="18"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Style="{StaticResource stackPanelHover}" PreviewMouseDown="Columns_Click">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Style="{StaticResource stackPanelHover}">
                 <materialDesign:ColorZone Mode="Light" Height="41" Width="3" Visibility="Hidden" x:Name="colorColumns"/>
                 <materialDesign:PackIcon Width="18" Height="18" Kind="Grid" Foreground="{StaticResource MaterialDesignPaper}" Margin="15,12,15,0"/>
                 <TextBlock Foreground="{StaticResource MaterialDesignPaper}" Padding="0,10,0,10" Text="Columns" FontSize="18"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Style="{StaticResource stackPanelHover}" PreviewMouseDown="Export_Click">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Style="{StaticResource stackPanelHover}">
                 <materialDesign:ColorZone Mode="Light" Height="41" Width="3" Visibility="Hidden" x:Name="colorExport"/>
                 <materialDesign:PackIcon Width="18" Height="18" Foreground="{StaticResource MaterialDesignPaper}" Kind="Download" Margin="15,12,15,0"/>
                 <TextBlock Text="Export" Foreground="{StaticResource MaterialDesignPaper}" Padding="0,10,0,10" FontSize="18"/>

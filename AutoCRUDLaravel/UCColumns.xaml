@@ -14,25 +14,9 @@
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}"
              d:DesignHeight="650" d:DesignWidth="975">
-
-    <UserControl.Resources>
-        <!--<Style TargetType="DataGridCell" BasedOn="{StaticResource MaterialDesignDataGridCell}" x:Key="ButtonColumn">
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type DataGridCell}">
-                        <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                            <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>-->
-    </UserControl.Resources>
-
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MaxWidth="660"/>
+            <ColumnDefinition MaxWidth="575"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <materialDesign:Card Margin="20,20,0,20" Padding="5">
@@ -79,7 +63,6 @@
                         </DataGridTemplateColumn>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                         <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
-                        <DataGridCheckBoxColumn Header="Nullable" Binding="{Binding IsNullable}"/>
                         <DataGridCheckBoxColumn Binding="{Binding IsVisibleIndex}">
                             <DataGridCheckBoxColumn.Header>
                                 <StackPanel HorizontalAlignment="Center">
@@ -110,7 +93,6 @@
         </materialDesign:Card>
 
         <materialDesign:Card Grid.Column="1" Margin="10,20,20,20">
-
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>

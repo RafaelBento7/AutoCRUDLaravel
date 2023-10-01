@@ -24,7 +24,7 @@ namespace AutoCRUDLaravel {
     /// Interação lógica para UCColumns.xam
     /// </summary>
     public partial class UCColumns : UserControl {
-        List<Column> Columns {
+        public List<Column> Columns {
             get {
                 if (dgColumns.ItemsSource == null)
                     return null;

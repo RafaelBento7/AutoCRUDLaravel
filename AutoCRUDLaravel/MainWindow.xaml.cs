@@ -20,51 +20,11 @@ namespace AutoCRUDLaravel {
     /// </summary>
     public partial class MainWindow : Window {
         string table;
+        List<Column> columns;
         public MainWindow() {
             InitializeComponent();
             Settings.Load();
             content.Content = new UCGeneral();
-        }
-
-        private void General_Click(object sender, MouseButtonEventArgs e) {
-            if (content.Content is UCGeneral)
-                return;
-
-            content.Content = new UCGeneral();
-            colorGeneral.Visibility = Visibility.Visible;
-            colorColumns.Visibility = Visibility.Hidden;
-            colorExport.Visibility = Visibility.Hidden;
-            btSave.Visibility = Visibility.Visible;
-            btExportJson.Visibility = Visibility.Collapsed;
-            btAddColumn.Visibility = Visibility.Collapsed;
-        }
-
-        private void Columns_Click(object sender, MouseButtonEventArgs e) {
-            if (content.Content is UCColumns || content.Content is UCExport)
-                return;
-            
-            if (content.Content is UCGeneral userControl)
-                table = userControl.Table;
-
-            if (string.IsNullOrEmpty(table))
-                return;
-
-            content.Content = new UCColumns(this.table);
-            colorGeneral.Visibility = Visibility.Hidden;
-            colorColumns.Visibility = Visibility.Visible;
-            colorExport.Visibility = Visibility.Hidden;
-            btSave.Visibility = Visibility.Collapsed;
-            btExportJson.Visibility = Visibility.Visible;
-            btAddColumn.Visibility = Visibility.Visible;
-        }
-
-        private void Export_Click(object sender, MouseButtonEventArgs e) {
-            if (content.Content is UCExport)
-                return;
-
-            colorGeneral.Visibility = Visibility.Hidden;
-            colorColumns.Visibility = Visibility.Hidden;
-            colorExport.Visibility = Visibility.Visible;
         }
 
         private void Save_Click(object sender, RoutedEventArgs e) {
@@ -78,14 +38,44 @@ namespace AutoCRUDLaravel {
         }
 
         private void Next_Click(object sender, RoutedEventArgs e) {
-            if (content.Content is UCGeneral) {
-                General_Click(this, null);
+            //if (content.Content is UCGeneral) {
+            //    content.Content = new UCGeneral();
+            //    colorGeneral.Visibility = Visibility.Visible;
+            //    colorColumns.Visibility = Visibility.Hidden;
+            //    colorExport.Visibility = Visibility.Hidden;
+            //    btSave.Visibility = Visibility.Visible;
+            //    btExportJson.Visibility = Visibility.Collapsed;
+            //    btAddColumn.Visibility = Visibility.Collapsed;
+
+            //    return;
+            //}
+
+            if (content.Content is UCGeneral ucGeneral) {
+                table = ucGeneral.Table;
+
+                if (string.IsNullOrEmpty(table))
+                    return;
+
+                content.Content = new UCColumns(this.table);
+                colorGeneral.Visibility = Visibility.Hidden;
+                colorColumns.Visibility = Visibility.Visible;
+                colorExport.Visibility = Visibility.Hidden;
+                btSave.Visibility = Visibility.Collapsed;
+                btExportJson.Visibility = Visibility.Visible;
+                btAddColumn.Visibility = Visibility.Visible;
+
                 return;
             }
 
-            if (content.Content is UCColumns) {
-                Columns_Click(this, null);
-                return;
+            if (content.Content is UCColumns ucColumns) {
+                columns = ucColumns.Columns;
+
+                if (columns == null)
+                    return;
+
+                colorGeneral.Visibility = Visibility.Hidden;
+                colorColumns.Visibility = Visibility.Hidden;
+                colorExport.Visibility = Visibility.Visible;
             }
         }
     }
