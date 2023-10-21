@@ -48,33 +48,38 @@
 
         <Grid Grid.Column="1" Height="Auto">
             <StackPanel>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource stackPanelHover}" x:Name="stackPanelModel">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource stackPanelHover}" x:Name="stackPanelModel" PreviewMouseDown="Model_PreviewMouseDown">
                     <materialDesign:ColorZone Mode="Inverted" Height="41" Width="3" Visibility="Visible" x:Name="colorModel"/>
                     <materialDesign:PackIcon Width="18" Height="14" Kind="DatabaseEdit" Margin="10,12,5,0" Foreground="{StaticResource MaterialDesignPaper}"/>
                     <TextBlock Text="Model" Padding="0,10,10,10" FontSize="14" Foreground="{StaticResource MaterialDesignPaper}"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource stackPanelHover}" x:Name="stackPanelController">
-                    <materialDesign:ColorZone Mode="Inverted" Height="41" Width="3" Visibility="Collapsed" x:Name="colorController"/>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource stackPanelHover}" x:Name="stackPanelController" PreviewMouseDown="Controller_PreviewMouseDown">
+                    <materialDesign:ColorZone Mode="Inverted" Height="41" Width="3" Visibility="Hidden" x:Name="colorController"/>
                     <materialDesign:PackIcon Width="18" Height="14" Kind="Function" Margin="10,12,5,0" Foreground="{StaticResource MaterialDesignPaper}"/>
                     <TextBlock Text="Controller" Padding="0,10,10,10" FontSize="14" Foreground="{StaticResource MaterialDesignPaper}"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource stackPanelHover}" x:Name="stackPanelJavaScript">
-                    <materialDesign:ColorZone Mode="Inverted" Height="41" Width="3" Visibility="Collapsed" x:Name="colorJavaScript"/>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource stackPanelHover}" x:Name="stackPanelJavaScript" PreviewMouseDown="JavaScript_PreviewMouseDown">
+                    <materialDesign:ColorZone Mode="Inverted" Height="41" Width="3" Visibility="Hidden" x:Name="colorJavaScript"/>
                     <materialDesign:PackIcon Width="18" Height="14" Kind="LanguageJavascript" Margin="10,12,5,0" Foreground="{StaticResource MaterialDesignPaper}"/>
                     <TextBlock Text="JavaScript" Padding="0,10,10,10" FontSize="14" Foreground="{StaticResource MaterialDesignPaper}"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource stackPanelHover}" x:Name="stackPanelIndex">
-                    <materialDesign:ColorZone Mode="Inverted" Height="41" Width="3" Visibility="Collapsed" x:Name="colorIndex"/>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource stackPanelHover}" x:Name="stackPanelIndex" PreviewMouseDown="Index_PreviewMouseDown">
+                    <materialDesign:ColorZone Mode="Inverted" Height="41" Width="3" Visibility="Hidden" x:Name="colorIndex"/>
                     <materialDesign:PackIcon Width="18" Height="14" Kind="Grid" Margin="10,12,5,0" Foreground="{StaticResource MaterialDesignPaper}"/>
                     <TextBlock Text="Index" Padding="0,10,10,10" FontSize="14" Foreground="{StaticResource MaterialDesignPaper}"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource stackPanelHover}" x:Name="stackPanelShow">
-                    <materialDesign:ColorZone Mode="Inverted" Height="41" Width="3" Visibility="Collapsed" x:Name="colorShow"/>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource stackPanelHover}" x:Name="stackPanelCreate" PreviewMouseDown="Create_PreviewMouseDown">
+                    <materialDesign:ColorZone Mode="Inverted" Height="41" Width="3" Visibility="Hidden" x:Name="colorCreate"/>
+                    <materialDesign:PackIcon Width="18" Height="14" Kind="PlusCircle" Margin="10,12,5,0" Foreground="{StaticResource MaterialDesignPaper}"/>
+                    <TextBlock Text="Create" Padding="0,10,10,10" FontSize="14" Foreground="{StaticResource MaterialDesignPaper}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource stackPanelHover}" x:Name="stackPanelShow" PreviewMouseDown="Show_PreviewMouseDown">
+                    <materialDesign:ColorZone Mode="Inverted" Height="41" Width="3" Visibility="Hidden" x:Name="colorShow"/>
                     <materialDesign:PackIcon Width="18" Height="14" Kind="Eye" Margin="10,12,5,0" Foreground="{StaticResource MaterialDesignPaper}"/>
                     <TextBlock Text="Show" Padding="0,10,10,10" FontSize="14" Foreground="{StaticResource MaterialDesignPaper}"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource stackPanelHover}" x:Name="stackPanelEdit">
-                    <materialDesign:ColorZone Mode="Inverted" Height="41" Width="3" Visibility="Collapsed" x:Name="colorEdit"/>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource stackPanelHover}" x:Name="stackPanelEdit" PreviewMouseDown="Edit_PreviewMouseDown">
+                    <materialDesign:ColorZone Mode="Inverted" Height="41" Width="3" Visibility="Hidden" x:Name="colorEdit"/>
                     <materialDesign:PackIcon Width="18" Height="14" Kind="Edit" Margin="10,12,5,0" Foreground="{StaticResource MaterialDesignPaper}"/>
                     <TextBlock Text="Edit" Padding="0,10,10,10" FontSize="14" Foreground="{StaticResource MaterialDesignPaper}"/>
                 </StackPanel>
