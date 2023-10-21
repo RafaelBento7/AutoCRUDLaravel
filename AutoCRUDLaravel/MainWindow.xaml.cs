@@ -38,28 +38,14 @@ namespace AutoCRUDLaravel {
         }
 
         private void Next_Click(object sender, RoutedEventArgs e) {
-            //if (content.Content is UCGeneral) {
-            //    content.Content = new UCGeneral();
-            //    colorGeneral.Visibility = Visibility.Visible;
-            //    colorColumns.Visibility = Visibility.Hidden;
-            //    colorExport.Visibility = Visibility.Hidden;
-            //    btSave.Visibility = Visibility.Visible;
-            //    btExportJson.Visibility = Visibility.Collapsed;
-            //    btAddColumn.Visibility = Visibility.Collapsed;
-
-            //    return;
-            //}
-
             if (content.Content is UCGeneral ucGeneral) {
                 table = ucGeneral.Table;
 
                 if (string.IsNullOrEmpty(table))
                     return;
-
+                btPrevious.Visibility = Visibility.Visible;
                 content.Content = new UCColumns(this.table);
-                colorGeneral.Visibility = Visibility.Hidden;
-                colorColumns.Visibility = Visibility.Visible;
-                colorExport.Visibility = Visibility.Hidden;
+                ChangeTabColorFocus(false, true, false);
                 btSave.Visibility = Visibility.Collapsed;
                 btExportJson.Visibility = Visibility.Visible;
                 btAddColumn.Visibility = Visibility.Visible;
@@ -73,10 +59,49 @@ namespace AutoCRUDLaravel {
                 if (columns == null)
                     return;
 
-                colorGeneral.Visibility = Visibility.Hidden;
-                colorColumns.Visibility = Visibility.Hidden;
-                colorExport.Visibility = Visibility.Visible;
+                ChangeTabColorFocus(false, false, true);
+                btNext.Visibility = Visibility.Collapsed;
+
+                content.Content = new UCExport();
             }
+        }
+
+        private void Previous_Click(object sender, RoutedEventArgs e) {
+            if (content.Content is UCGeneral)
+                return;
+
+            btNext.Visibility = Visibility.Visible;
+
+            if (content.Content is UCColumns ucColumns) {
+                btPrevious.Visibility = Visibility.Collapsed;
+
+                columns = ucColumns.Columns;
+                ChangeTabColorFocus(true, false, false);
+                btSave.Visibility = Visibility.Visible;
+                btExportJson.Visibility = Visibility.Collapsed;
+                btAddColumn.Visibility = Visibility.Collapsed;
+
+                content.Content = new UCGeneral();
+            }
+
+            if (content.Content is UCExport ucExport) {
+                ChangeTabColorFocus(false, true, false);
+                content.Content = new UCColumns(table);
+            }
+        }
+
+        private void ChangeTabColorFocus(bool general, bool columns, bool export) {
+            if (general)
+                colorGeneral.Visibility = Visibility.Visible;
+            else colorGeneral.Visibility = Visibility.Hidden;
+
+            if (columns)
+                colorColumns.Visibility = Visibility.Visible;
+            else colorColumns.Visibility = Visibility.Hidden;
+
+            if (export)
+                colorExport.Visibility = Visibility.Visible;
+            else colorExport.Visibility = Visibility.Hidden;
         }
     }
 }

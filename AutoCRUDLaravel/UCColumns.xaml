@@ -98,7 +98,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <ScrollViewer  Grid.Row="0">
+                <ScrollViewer  Grid.Row="0" VerticalScrollBarVisibility="Auto">
                     <StackPanel Margin="20,20,20,20">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Field - " FontSize="16"/>
