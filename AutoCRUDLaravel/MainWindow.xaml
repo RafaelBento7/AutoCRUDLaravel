@@ -56,6 +56,7 @@
 
         <ContentControl x:Name="content" Grid.Column="1"/>
 
+        <!-- General Button -->
         <Button Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Width="200" Margin="20,0,0,20" Style="{StaticResource MaterialDesignOutlinedButton}" Click="Save_Click" x:Name="btSave"
                 ToolTipService.ToolTip="The password wont be saved!" ToolTipService.IsEnabled="True">
             <StackPanel Orientation="Horizontal">
@@ -64,22 +65,31 @@
             </StackPanel>
         </Button>
 
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="20,0,0,20">
-            <Button Grid.Row="2" x:Name="btAddColumn" HorizontalAlignment="Left" Width="200" Foreground="White" Visibility="Collapsed">
+        <!-- Columns Button -->
+        <Button Grid.Row="1" Grid.Column="1" x:Name="btAddColumn" Margin="20,0,0,20" HorizontalAlignment="Left" Width="200" Foreground="White" Visibility="Collapsed">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Add" Margin="0,0,5,0"/>
+                <TextBlock Text="Add Column"/>
+            </StackPanel>
+        </Button>
+
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="20,0,0,20" Orientation="Horizontal" HorizontalAlignment="Left" Visibility="Collapsed" x:Name="stackPanelExport">
+            <Button Foreground="{StaticResource MaterialDesignPaper}" Width="200" Click="ExportAll_Click" Margin="0,0,10,0" x:Name="btExportAll">
                 <StackPanel Orientation="Horizontal">
-                    <materialDesign:PackIcon Kind="Add" Margin="0,0,5,0"/>
-                    <TextBlock Text="Add Column"/>
+                    <materialDesign:PackIcon Kind="FileExport" Margin="0,0,5,0"/>
+                    <TextBlock Text="Export All"/>
                 </StackPanel>
             </Button>
 
-            <Button Grid.Row="2" x:Name="btExportJson" HorizontalAlignment="Right" Width="200" Margin="10,0,0,0" Style="{StaticResource MaterialDesignOutlinedButton}" Visibility="Collapsed">
+            <Button Width="200" Click="Export_Click" x:Name="btExport" Style="{StaticResource MaterialDesignOutlinedButton}">
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="FileExport" Margin="0,0,5,0"/>
-                    <TextBlock Text="Export JSON"/>
+                    <TextBlock Text="Export"/>
                 </StackPanel>
             </Button>
         </StackPanel>
 
+        <!-- Next/Previous -->
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="0,0,20,20" HorizontalAlignment="Right">
             <Button Foreground="{StaticResource MaterialDesignPaper}" Width="200" Click="Previous_Click" Margin="0,0,10,0" Visibility="Collapsed" x:Name="btPrevious">
                 <StackPanel Orientation="Horizontal">

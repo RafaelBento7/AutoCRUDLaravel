@@ -19,6 +19,11 @@ namespace AutoCRUDLaravel {
     /// Interação lógica para MainWindow.xam
     /// </summary>
     public partial class MainWindow : Window {
+        private enum Screen {
+            GENERAL,
+            COLUMNS,
+            EXPORT
+        }
         string table;
         List<Column> columns;
         public MainWindow() {
@@ -40,29 +45,20 @@ namespace AutoCRUDLaravel {
         private void Next_Click(object sender, RoutedEventArgs e) {
             if (content.Content is UCGeneral ucGeneral) {
                 table = ucGeneral.Table;
-
                 if (string.IsNullOrEmpty(table))
                     return;
-                btPrevious.Visibility = Visibility.Visible;
+
                 content.Content = new UCColumns(this.table);
-                ChangeTabColorFocus(false, true, false);
-                btSave.Visibility = Visibility.Collapsed;
-                btExportJson.Visibility = Visibility.Visible;
-                btAddColumn.Visibility = Visibility.Visible;
-
+                ChangeScreen(Screen.COLUMNS);
                 return;
-            }
-
-            if (content.Content is UCColumns ucColumns) {
+            } else if (content.Content is UCColumns ucColumns) {
                 columns = ucColumns.Columns;
 
                 if (columns == null)
                     return;
 
-                ChangeTabColorFocus(false, false, true);
-                btNext.Visibility = Visibility.Collapsed;
-
-                content.Content = new UCExport();
+                ChangeScreen(Screen.EXPORT);
+                content.Content = new UCExport(columns);
             }
         }
 
@@ -70,38 +66,53 @@ namespace AutoCRUDLaravel {
             if (content.Content is UCGeneral)
                 return;
 
-            btNext.Visibility = Visibility.Visible;
-
             if (content.Content is UCColumns ucColumns) {
-                btPrevious.Visibility = Visibility.Collapsed;
-
                 columns = ucColumns.Columns;
-                ChangeTabColorFocus(true, false, false);
-                btSave.Visibility = Visibility.Visible;
-                btExportJson.Visibility = Visibility.Collapsed;
-                btAddColumn.Visibility = Visibility.Collapsed;
-
+                ChangeScreen(Screen.GENERAL);
                 content.Content = new UCGeneral();
-            }
-
-            if (content.Content is UCExport ucExport) {
-                ChangeTabColorFocus(false, true, false);
+            } else if (content.Content is UCExport ucExport) {
+                ChangeScreen(Screen.COLUMNS);
                 content.Content = new UCColumns(table);
             }
         }
 
-        private void ChangeTabColorFocus(bool general, bool columns, bool export) {
-            if (general)
+        private void ChangeScreen(Screen currentScreen) {
+            if (currentScreen == Screen.GENERAL) {
                 colorGeneral.Visibility = Visibility.Visible;
-            else colorGeneral.Visibility = Visibility.Hidden;
-
-            if (columns)
+                colorColumns.Visibility = Visibility.Hidden;
+                colorExport.Visibility = Visibility.Hidden;
+                btNext.Visibility = Visibility.Visible;
+                btPrevious.Visibility = Visibility.Collapsed;
+                stackPanelExport.Visibility = Visibility.Collapsed;
+                btAddColumn.Visibility = Visibility.Collapsed;
+                btSave.Visibility = Visibility.Visible;
+            } else if (currentScreen == Screen.COLUMNS) {
+                colorGeneral.Visibility = Visibility.Hidden;
                 colorColumns.Visibility = Visibility.Visible;
-            else colorColumns.Visibility = Visibility.Hidden;
-
-            if (export)
+                colorExport.Visibility = Visibility.Hidden;
+                btNext.Visibility = Visibility.Visible;
+                btPrevious.Visibility = Visibility.Visible;
+                stackPanelExport.Visibility = Visibility.Collapsed;
+                btAddColumn.Visibility = Visibility.Visible;
+                btSave.Visibility = Visibility.Collapsed;
+            } else {
+                colorGeneral.Visibility = Visibility.Hidden;
+                colorColumns.Visibility = Visibility.Hidden;
                 colorExport.Visibility = Visibility.Visible;
-            else colorExport.Visibility = Visibility.Hidden;
+                btNext.Visibility = Visibility.Collapsed;
+                btPrevious.Visibility = Visibility.Visible;
+                stackPanelExport.Visibility = Visibility.Visible;
+                btAddColumn.Visibility = Visibility.Collapsed;
+                btSave.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void Export_Click(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void ExportAll_Click(object sender, RoutedEventArgs e) {
+
         }
     }
 }

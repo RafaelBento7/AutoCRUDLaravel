@@ -18,7 +18,7 @@ namespace AutoCRUDLaravel {
     /// Interação lógica para UCExport.xam
     /// </summary>
     public partial class UCExport : UserControl {
-        public UCExport() {
+        public UCExport(List<Column> columns) {
             InitializeComponent();
         }
     }
