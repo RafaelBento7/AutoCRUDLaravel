@@ -107,6 +107,12 @@
                 
                 <Separator Margin="0,5,0,0"/>
 
+                <DataGrid AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True" Margin="0,20,0,0">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="File Variable" Width="2*"/>
+                        <DataGridTextColumn Header="Content" Width="2*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </StackPanel>
         </materialDesign:Card>
 
