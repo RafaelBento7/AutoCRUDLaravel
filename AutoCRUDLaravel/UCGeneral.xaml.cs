@@ -30,17 +30,6 @@ namespace AutoCRUDLaravel {
                 tbPort.Text = Settings.Port;
                 tbUsername.Text = Settings.Username;
                 tbDatabase.Text = Settings.Database;
-                cbGenerateIndex.IsChecked = Settings.GenerateIndex;
-                cbGenerateEdit.IsChecked = Settings.GenerateEdit;
-                cbGenerateShow.IsChecked = Settings.GenerateShow;
-                cbGenerateCreate.IsChecked = Settings.GenerateCreate;
-                cbDisplayButtonShow.IsChecked = Settings.ShowShowButtonIndex;
-                cbDisplayButtonEdit.IsChecked = Settings.ShowEditButtonIndex;
-                cbDisplayButtonDelete.IsChecked = Settings.ShowDeleteButtonIndex;
-                cbVisibleIndex.IsChecked = Settings.IsVisibleIndex;
-                cbVisibleEdit.IsChecked = Settings.IsVisibleEdit;
-                cbVisibleShow.IsChecked = Settings.IsVisibleShow;
-                cbVisibleCreate.IsChecked = Settings.IsVisibleCreate;
             };
         }
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoCRUDLaravel {
+namespace AutoCRUDLaravel.Models {
     public class ColumnType {
         public enum TypeEnum {
             NONE,
@@ -27,7 +27,7 @@ namespace AutoCRUDLaravel {
             this.Description = description;
         }
 
-        public override string  ToString() {
+        public override string ToString() {
             return this.Description;
         }
 

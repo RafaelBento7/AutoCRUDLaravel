@@ -102,54 +102,15 @@
             <StackPanel Grid.Row="2">
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Settings" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                    <TextBlock Grid.Row="0" FontSize="24" Text="General Settings"/>
+                    <TextBlock Grid.Row="0" FontSize="24" Text="File Variables"/>
                 </StackPanel>
                 
                 <Separator Margin="0,5,0,0"/>
 
-                <Grid Margin="0,20,0,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Column="0" Grid.Row="0" FontSize="15" Text="Generate Views:" Margin="0,0,20,0"/>
-                    <CheckBox Grid.Column="0" Grid.Row="1" x:Name="cbGenerateIndex" Content="Index" Margin="0,5,0,0"/>
-                    <CheckBox Grid.Column="0" Grid.Row="2" x:Name="cbGenerateEdit" Content="Edit" Margin="0,5,0,0"/>
-                    <CheckBox Grid.Column="0" Grid.Row="3" x:Name="cbGenerateShow" Content="Show" Margin="0,5,0,0"/>
-                    <CheckBox Grid.Column="0" Grid.Row="4" x:Name="cbGenerateCreate" Content="Create" Margin="0,5,0,0"/>
-
-                    <Separator Grid.RowSpan="5" Grid.Column="1" Style="{DynamicResource VerticalSeparatorStyle}" Opacity="0.7"/>
-
-                    <TextBlock Grid.Column="2" Grid.Row="0" FontSize="15" Text="Buttons Displayed on Index View:" Margin="20,0,20,0"/>
-                    <CheckBox Grid.Column="2" Grid.Row="1" x:Name="cbDisplayButtonShow" Content="Show" Margin="20,5,0,0"/>
-                    <CheckBox Grid.Column="2" Grid.Row="2" x:Name="cbDisplayButtonEdit" Content="Edit" Margin="20,5,0,0"/>
-                    <CheckBox Grid.Column="2" Grid.Row="3" x:Name="cbDisplayButtonDelete" Content="Delete" Margin="20,5,0,0"/>
-
-                    <Separator Grid.RowSpan="5" Grid.Column="3" Style="{DynamicResource VerticalSeparatorStyle}" Opacity="0.7"/>
-
-                    <TextBlock Grid.Column="4" Grid.Row="0" FontSize="15" Margin="20,0,0,0" Text="Auto Set Display Columns in:"/>
-                    <CheckBox Grid.Column="4" Grid.Row="1" x:Name="cbVisibleIndex" Content="Index" Margin="20,5,20,0"/>
-                    <CheckBox Grid.Column="4" Grid.Row="2" x:Name="cbVisibleCreate" Content="Create" Margin="20,5,20,0"/>
-                    <CheckBox Grid.Column="4" Grid.Row="3" x:Name="cbVisibleEdit" Content="Edit" Margin="20,5,20,0"/>
-                    <CheckBox Grid.Column="4" Grid.Row="4" x:Name="cbVisibleShow" Content="Show" Margin="20,5,20,0"/>
-                </Grid>
             </StackPanel>
         </materialDesign:Card>
 
-        <materialDesign:Snackbar Grid.Row="3" Margin="0,0,0,20" IsActive="False" x:Name="SnackbarError" Background="Red"
-                                    MessageQueue="{materialDesign:MessageQueue}"/>
-        <materialDesign:Snackbar Grid.Row="3" Margin="0,0,0,20" IsActive="False" x:Name="SnackbarSuccess" Background="Green"
-                            MessageQueue="{materialDesign:MessageQueue}"/>
+        <materialDesign:Snackbar Grid.Row="3" Margin="0,0,0,20" IsActive="False" x:Name="SnackbarError" Background="Red" MessageQueue="{materialDesign:MessageQueue}"/>
+        <materialDesign:Snackbar Grid.Row="3" Margin="0,0,0,20" IsActive="False" x:Name="SnackbarSuccess" Background="Green" MessageQueue="{materialDesign:MessageQueue}"/>
     </Grid>
 </UserControl>

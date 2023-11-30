@@ -15,18 +15,6 @@ namespace AutoCRUDLaravel {
         public static string Username { get; set; }
         public static string Database { get; set; }
 
-        public static bool GenerateIndex { get; set; }
-        public static bool GenerateShow { get; set; }
-        public static bool GenerateEdit { get; set; }
-        public static bool GenerateCreate { get; set; }
-        public static bool ShowDeleteButtonIndex { get; set; }
-        public static bool ShowEditButtonIndex { get; set; }
-        public static bool ShowShowButtonIndex { get; set; }
-        public static bool IsVisibleIndex { get; set; }
-        public static bool IsVisibleEdit { get; set; }
-        public static bool IsVisibleCreate { get; set; }
-        public static bool IsVisibleShow { get; set; }
-
 
         private static void CreateConfigFile() {
             try {
@@ -38,10 +26,7 @@ namespace AutoCRUDLaravel {
             }
         }
 
-        public static void Save(string server, string port, string username, string database,
-                                bool generateIndex, bool generateShow, bool generateEdit, bool generateCreate,
-                                bool showDeleteButton, bool showEditButton, bool showShowButton,
-                                bool visibleIndex, bool visibleEdit, bool visibleCreate, bool visibleShow) {
+        public static void Save(string server, string port, string username, string database) {
             if (!File.Exists(Environment.CurrentDirectory + @"\config.ini"))
                 CreateConfigFile();
             try {
@@ -51,17 +36,6 @@ namespace AutoCRUDLaravel {
                 data["Database"]["Port"] = port;
                 data["Database"]["Username"] = username;
                 data["Database"]["Database"] = database;
-                data["General"]["GenerateIndex"] = generateIndex.ToString();
-                data["General"]["GenerateShow"] = generateShow.ToString();
-                data["General"]["GenerateEdit"] = generateEdit.ToString();
-                data["General"]["GenerateCreate"] = generateCreate.ToString();
-                data["General"]["ShowDeleteButton"] = showDeleteButton.ToString();
-                data["General"]["ShowEditButton"] = showEditButton.ToString();
-                data["General"]["ShowShowButton"] = showShowButton.ToString();
-                data["General"]["VisibleIndex"] = visibleIndex.ToString();
-                data["General"]["VisibleEdit"] = visibleEdit.ToString();
-                data["General"]["VisibleCreate"] = visibleCreate.ToString();
-                data["General"]["VisibleShow"] = visibleShow.ToString();
                 parser.WriteFile("config.ini", data);
                 Load();
                 MessageBox.Show($"Settings Saved!");
@@ -83,17 +57,6 @@ namespace AutoCRUDLaravel {
                 Port = data["Database"]["Port"];
                 Username = data["Database"]["Username"];
                 Database = data["Database"]["Database"];
-                GenerateIndex = data["General"]["GenerateIndex"].ToBoolean();
-                GenerateShow = data["General"]["GenerateShow"].ToBoolean();
-                GenerateEdit = data["General"]["GenerateEdit"].ToBoolean();
-                GenerateCreate = data["General"]["GenerateCreate"].ToBoolean();
-                ShowDeleteButtonIndex = data["General"]["ShowDeleteButton"].ToBoolean();
-                ShowEditButtonIndex = data["General"]["ShowEditButton"].ToBoolean();
-                ShowShowButtonIndex = data["General"]["ShowShowButton"].ToBoolean();
-                IsVisibleIndex = data["General"]["VisibleIndex"].ToBoolean();
-                IsVisibleEdit = data["General"]["VisibleEdit"].ToBoolean();
-                IsVisibleCreate = data["General"]["VisibleCreate"].ToBoolean();
-                IsVisibleShow = data["General"]["VisibleShow"].ToBoolean();
             } catch (Exception ex) {
                 MessageBox.Show($"Error loading settings\nError:{ex.Message}");
             }

@@ -1,0 +1,38 @@
+[
+  {
+    "FileVariable": "{views_folder_name}",
+    "EquivalenceVariable": "users"
+  },
+  {
+    "FileVariable": "{index_title}",
+    "EquivalenceVariable": "Utilizadores"
+  },
+  {
+    "FileVariable": "{create_title}",
+    "EquivalenceVariable": "Criar Utilizador"
+  },
+  {
+    "FileVariable": "{edit_title}",
+    "EquivalenceVariable": "Editar Utilizador"
+  },
+  {
+    "FileVariable": "{show_title}",
+    "EquivalenceVariable": "Utilizadores"
+  },
+  {
+    "FileVariable": "{base_routes_path}",
+    "EquivalenceVariable": "users"
+  },
+  {
+    "FileVariable": "{model_name}",
+    "EquivalenceVariable": "User"
+  },
+  {
+    "FileVariable": "{controller_name}",
+    "EquivalenceVariable": "UserController"
+  },
+  {
+    "FileVariable": "{table}",
+    "EquivalenceVariable": "database_table"
+  }
+]
