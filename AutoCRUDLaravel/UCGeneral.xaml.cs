@@ -1,6 +1,8 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using AutoCRUDLaravel.Models;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +22,15 @@ namespace AutoCRUDLaravel {
     /// </summary>
     public partial class UCGeneral : UserControl {
         public string Table { get { return cbTable.Text; } }
+        public string Server { get { return tbServer.Text; } }
+        public string Port { get { return tbPort.Text; } }
+        public string Username { get { return tbUsername.Text; } }
+        public string Database { get { return tbDatabase.Text; } }
+
+        public ObservableCollection<GeneratorVariables> Variables { get { return list; } }
+
+
+        private ObservableCollection<GeneratorVariables> list;
 
         public UCGeneral() {
             InitializeComponent();
@@ -30,6 +41,9 @@ namespace AutoCRUDLaravel {
                 tbPort.Text = Settings.Port;
                 tbUsername.Text = Settings.Username;
                 tbDatabase.Text = Settings.Database;
+                list = GeneratorVariables.GetVariables();
+                list.Insert(0, new GeneratorVariables("{columns}", "Display the columns based on the templates (Create/Edit/Show views)", true));
+                dgVariables.ItemsSource = list;
             };
         }
 
@@ -77,6 +91,17 @@ namespace AutoCRUDLaravel {
 
             cbTable.ItemsSource = null;
             cbTable.ItemsSource = tables;
+        }
+
+        private void Delete_Click(object sender, RoutedEventArgs e) {
+            if (dgVariables.SelectedItem == null || !(dgVariables.SelectedItem is GeneratorVariables item))
+                return;
+
+            list.Remove(item);
+        }
+
+        private void NewVariable_Click(object sender, RoutedEventArgs e) {
+            list.Add(new GeneratorVariables("{variable}", "value"));
         }
     }
 }

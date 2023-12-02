@@ -13,11 +13,9 @@
              TextOptions.TextRenderingMode="Auto"
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}"
-             d:DesignHeight="650" d:DesignWidth="975">
+             d:DesignHeight="700" d:DesignWidth="975">
     <UserControl.Resources>
-        <Style x:Key="VerticalSeparatorStyle" 
-       TargetType="{x:Type Separator}"
-       BasedOn="{StaticResource {x:Type Separator}}">
+        <Style x:Key="VerticalSeparatorStyle" TargetType="{x:Type Separator}" BasedOn="{StaticResource {x:Type Separator}}">
             <Setter Property="Margin" Value="6,0,6,0"/>
             <Setter Property="LayoutTransform">
                 <Setter.Value>
@@ -80,7 +78,7 @@
                     <TextBox Grid.Row="2" Grid.Column="1" x:Name="tbDatabase" Width="200" Margin="10,15,0,0" Style="{StaticResource SmallOutlinedTextBox}" materialDesign:HintAssist.Hint="Database Name"/>
 
                     <TextBlock Grid.Row="2" Grid.Column="2" Text="Table:" VerticalAlignment="Center" Margin="30,15,0,0"/>
-                    <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Margin="10,15,0,0" ToolTipService.ToolTip="Teste a Ligação Primeiro" ToolTipService.IsEnabled="True" ToolTipService.ShowOnDisabled="True">
+                    <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Margin="10,15,0,0" ToolTipService.ToolTip="Test connection first" ToolTipService.IsEnabled="True" ToolTipService.ShowOnDisabled="True">
                         <ComboBox x:Name="cbTable" Width="200"  Style="{StaticResource SmallOutlinedComboBox}" IsEnabled="False" materialDesign:HintAssist.Hint="Select a Table" />
                         <Button x:Name="btUpdateTables" Style="{StaticResource MaterialDesignIconButton}" Width="25" Height="25" Margin="5,0,0,0" IsEnabled="False" 
                                 ToolTipService.IsEnabled="True" ToolTipService.ToolTip="Atualizar lista de tabelas" Cursor="Hand" Click="UpdateTables_Click">
@@ -107,12 +105,68 @@
                 
                 <Separator Margin="0,5,0,0"/>
 
-                <DataGrid AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True" Margin="0,20,0,0">
+                <DataGrid AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True" Margin="0,20,0,0" x:Name="dgVariables" VerticalScrollBarVisibility="Auto" MaxHeight="200">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="File Variable" Width="2*"/>
-                        <DataGridTextColumn Header="Content" Width="2*"/>
+                        <DataGridTextColumn Header="File Variable" Width="2*" Binding="{Binding FileVariable}">
+                            <DataGridTextColumn.EditingElementStyle>
+                                <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsDefault}" Value="False">
+                                            <Setter Property="IsEnabled" Value="True"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsDefault}" Value="True">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.EditingElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Content" Width="2*" Binding="{Binding EquivalenceVariable}">
+                            <DataGridTextColumn.EditingElementStyle>
+                                <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsDefault}" Value="False">
+                                            <Setter Property="IsEnabled" Value="True"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsDefault}" Value="True">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTextColumn.EditingElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTemplateColumn Width="50" >
+                            <DataGridTemplateColumn.CellStyle>
+                                <Style TargetType="DataGridCell" BasedOn="{StaticResource MaterialDesignDataGridCell}">
+                                    <Setter Property="Padding" Value="0"/>
+                                    <Setter Property="BorderBrush" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsDefault}" Value="False">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsDefault}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGridTemplateColumn.CellStyle>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Click="Delete_Click" Style="{StaticResource MaterialDesignIconButton}" Width="30" Height="30" Foreground="Red" BorderBrush="Red">
+                                        <materialDesign:PackIcon Kind="TrashCan" Width="30" Height="24"/>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
+
+                <Button HorizontalAlignment="Right" Width="200" Margin="0,15,0,0" Click="NewVariable_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Add" Margin="0,0,5,0" Foreground="{StaticResource MaterialDesignPaper}"/>
+                        <TextBlock Text="Add Variable" Foreground="{StaticResource MaterialDesignPaper}"/>
+                    </StackPanel>
+                </Button>
             </StackPanel>
         </materialDesign:Card>
 

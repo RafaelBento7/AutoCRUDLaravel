@@ -12,7 +12,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Auto CRUD Generator - Laravel" Height="700" Width="1200" WindowStartupLocation="CenterScreen">
+        Title="Auto CRUD Generator - Laravel" Height="750" Width="1200" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="stackPanelHover" TargetType="{x:Type StackPanel}">
             <Style.Triggers>

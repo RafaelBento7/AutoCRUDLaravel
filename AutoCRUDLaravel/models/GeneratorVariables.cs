@@ -1,24 +1,43 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Windows;
+using System.Windows.Documents;
 
 namespace AutoCRUDLaravel.Models {
-    internal class GeneratorVariables {
+    public class GeneratorVariables {
         public string FileVariable { get; set; }
         public string EquivalenceVariable { get; set; }
+        [JsonIgnore]
+        public bool IsDefault { get; set; }
 
-        public GeneratorVariables(string file, string equivalence) {
+        public GeneratorVariables(string file, string equivalence, bool isDefault = false) {
             this.FileVariable = file;
             this.EquivalenceVariable = equivalence;
+            this.IsDefault = isDefault;
         }
 
-        public static List<GeneratorVariables> GetVariables() {
-            string path = $@"{Environment.CurrentDirectory}\FileVariables.json";
-            //TODO Deserialize
-            return null;
+        public static ObservableCollection<GeneratorVariables> GetVariables() {
+            try {
+                return new ObservableCollection<GeneratorVariables>(JsonConvert.DeserializeObject<List<GeneratorVariables>>(File.ReadAllText($@"{Environment.CurrentDirectory}\templates\FileVariables.json")));
+            } catch (Exception ex) {
+                MessageBox.Show("Error while deserializing variables from json.\r\nError: " + ex.Message);
+                return null;
+            }
         }
 
-        public static void SaveVariables(List<GeneratorVariables> list) {
-            //TODO Serialize and Save
+        public static void SaveVariables(ObservableCollection<GeneratorVariables> list) {
+            try {
+                List<GeneratorVariables> filteredList = list.Where(item => !item.IsDefault).ToList();
+                string json = JsonConvert.SerializeObject(filteredList, Formatting.Indented);
+                File.WriteAllText($@"{Environment.CurrentDirectory}\templates\FileVariables.json", json);
+            } catch (Exception ex) {
+                MessageBox.Show("Error while deserializing variables from json.\r\nError: " + ex.Message);
+            }
         }
     }
 }

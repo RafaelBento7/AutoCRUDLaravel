@@ -24,7 +24,8 @@ namespace AutoCRUDLaravel {
             if (!(content.Content is UCGeneral uc))
                 return;
 
-            Settings.Save(uc.tbServer.Text, uc.tbPort.Text, uc.tbUsername.Text, uc.tbDatabase.Text);
+            Settings.Save(uc.Server, uc.Port, uc.Username, uc.Database);
+            GeneratorVariables.SaveVariables(uc.Variables);
         }
 
         private void Next_Click(object sender, RoutedEventArgs e) {
