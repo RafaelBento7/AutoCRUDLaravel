@@ -2,7 +2,11 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:AutoCRUDLaravel"
+<<<<<<< HEAD
              StartupUri="ui/MainWindow.xaml">
+=======
+             StartupUri="UI/MainWindow.xaml">
+>>>>>>> e97900ab75f6ba41f384258fdada88a85b4ba9e8
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
