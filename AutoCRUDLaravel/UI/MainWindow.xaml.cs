@@ -1,5 +1,6 @@
 ﻿using AutoCRUDLaravel.Models;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace AutoCRUDLaravel {
@@ -14,6 +15,8 @@ namespace AutoCRUDLaravel {
         }
         string table;
         List<Column> columns;
+        ObservableCollection<GeneratorVariables> variables;
+
         public MainWindow() {
             InitializeComponent();
             Settings.Load();
@@ -31,6 +34,7 @@ namespace AutoCRUDLaravel {
         private void Next_Click(object sender, RoutedEventArgs e) {
             if (content.Content is UCGeneral ucGeneral) {
                 table = ucGeneral.Table;
+                variables = ucGeneral.Variables;
                 if (string.IsNullOrEmpty(table))
                     return;
 
@@ -44,7 +48,7 @@ namespace AutoCRUDLaravel {
                     return;
 
                 ChangeScreen(Screen.EXPORT);
-                content.Content = new UCExport(columns);
+                content.Content = new UCExport(columns, variables);
             }
         }
 

@@ -131,6 +131,7 @@
     <Compile Include="models\ColumnType.cs" />
     <Compile Include="DbConnection.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="models\ExportData.cs" />
     <Compile Include="models\GeneratorVariables.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ui\UCColumns.xaml.cs">
@@ -258,11 +259,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="templates\columns_template_create_edit\numeric.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="templates\columns_template_create_edit\numeric_int.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -284,11 +280,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="templates\columns_template_show\datetime.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="templates\columns_template_show\numeric.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -1,5 +1,8 @@
 ﻿using AutoCRUDLaravel.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -19,11 +22,42 @@ namespace AutoCRUDLaravel {
             EDIT
         }
 
+        public ExportData Data { get; }
+
+        private string templatesPath;
+        private string columnsFormsTemplatePath;
+        private string columnsShowTemplatePath;
+
         private View currentView;
 
-        public UCExport(List<Column> columns) {
+        private ExportData data;
+
+        public UCExport(List<Column> columns, ObservableCollection<GeneratorVariables> variables) {
             InitializeComponent();
             SetView(currentView);
+
+            templatesPath = Path.Combine(Environment.CurrentDirectory, "templates");
+            columnsFormsTemplatePath = Path.Combine(templatesPath, "columns_template_create_edit");
+            columnsShowTemplatePath = Path.Combine(templatesPath, "columns_template_show");
+
+            GenerateViews(columns);
+        }
+
+        private void GenerateViews(List<Column> columns) {
+            try {
+                ExportData data = new ExportData();
+                data.ReadColumnTemplates(columnsFormsTemplatePath, columnsShowTemplatePath);
+                data.ReadTemplates(templatesPath);
+                data.GenerateIndex(columns);
+                data.GenerateEdit(columns);
+                data.GenerateCreate(columns);
+                data.GenerateShow(columns);
+                data.GenerateModel(columns);
+                data.GenerateController(columns);
+                data.GenerateJavaScript(columns);
+            } catch (Exception ex) {
+                MessageBox.Show("Error while generating the views.\r\nError:" + ex.Message);
+            }
         }
 
         private void SetView(View currentView) {
@@ -40,45 +74,31 @@ namespace AutoCRUDLaravel {
             switch (currentView) {
                 case View.MODEL:
                     colorModel.Visibility = Visibility.Visible;
+                    tbPreview.Text = data.Model;
                     break;
                 case View.CONTROLLER:
                     colorController.Visibility = Visibility.Visible;
+                    tbPreview.Text = data.Controller;
                     break;
                 case View.JAVASCRIPT:
                     colorJavaScript.Visibility = Visibility.Visible;
+                    tbPreview.Text = data.JavaScript;
                     break;
                 case View.INDEX:
                     colorIndex.Visibility = Visibility.Visible;
+                    tbPreview.Text = data.Index;
                     break;
                 case View.CREATE:
                     colorCreate.Visibility = Visibility.Visible;
+                    tbPreview.Text = data.Create;
                     break;
                 case View.SHOW:
                     colorShow.Visibility = Visibility.Visible;
+                    tbPreview.Text = data.Show;
                     break;
                 case View.EDIT:
                     colorEdit.Visibility = Visibility.Visible;
-                    break;
-            }
-        }
-
-        private void LoadPreview(View currentView) {
-            switch (currentView) {
-                case View.MODEL:
-                    break;
-                case View.CONTROLLER:
-                    break;
-                case View.JAVASCRIPT:
-                    break;
-                case View.INDEX:
-                    break;
-                case View.CREATE:
-                    break;
-                case View.SHOW:
-                    break;
-                case View.EDIT:
-                    break;
-                default:
+                    tbPreview.Text = data.Edit;
                     break;
             }
         }

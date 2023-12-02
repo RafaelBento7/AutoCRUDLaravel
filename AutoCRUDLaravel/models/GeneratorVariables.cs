@@ -4,11 +4,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.Windows;
-using System.Windows.Documents;
 
-namespace AutoCRUDLaravel.Models {
+namespace AutoCRUDLaravel.models {
     public class GeneratorVariables {
         public string FileVariable { get; set; }
         public string EquivalenceVariable { get; set; }

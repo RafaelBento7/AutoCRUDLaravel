@@ -1,4 +1,4 @@
-﻿namespace AutoCRUDLaravel.Models {
+﻿namespace AutoCRUDLaravel.models {
     public class Column {
         public string Name { get; set; }
         public ColumnType Type { get; set; }
