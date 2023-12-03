@@ -1,4 +1,4 @@
-﻿using AutoCRUDLaravel.Models;
+﻿using AutoCRUDLaravel.models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

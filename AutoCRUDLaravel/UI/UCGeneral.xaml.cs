@@ -1,4 +1,4 @@
-﻿using AutoCRUDLaravel.Models;
+﻿using AutoCRUDLaravel.models;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;

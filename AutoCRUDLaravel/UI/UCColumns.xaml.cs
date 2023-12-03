@@ -1,4 +1,4 @@
-﻿using AutoCRUDLaravel.Models;
+﻿using AutoCRUDLaravel.models;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;

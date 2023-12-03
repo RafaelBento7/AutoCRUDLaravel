@@ -1,4 +1,4 @@
-﻿using AutoCRUDLaravel.Models;
+﻿using AutoCRUDLaravel.models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,9 +24,9 @@ namespace AutoCRUDLaravel {
 
         public ExportData Data { get; }
 
-        private string templatesPath;
-        private string columnsFormsTemplatePath;
-        private string columnsShowTemplatePath;
+        private readonly string templatesPath;
+        private readonly string columnsFormsTemplatePath;
+        private readonly string columnsShowTemplatePath;
 
         private View currentView;
 
@@ -40,21 +40,21 @@ namespace AutoCRUDLaravel {
             columnsFormsTemplatePath = Path.Combine(templatesPath, "columns_template_create_edit");
             columnsShowTemplatePath = Path.Combine(templatesPath, "columns_template_show");
 
-            GenerateViews(columns);
+            GenerateViews(columns, variables);
         }
 
-        private void GenerateViews(List<Column> columns) {
+        private void GenerateViews(List<Column> columns, ObservableCollection<GeneratorVariables> variables) {
             try {
                 ExportData data = new ExportData();
                 data.ReadColumnTemplates(columnsFormsTemplatePath, columnsShowTemplatePath);
                 data.ReadTemplates(templatesPath);
-                data.GenerateIndex(columns);
-                data.GenerateEdit(columns);
-                data.GenerateCreate(columns);
-                data.GenerateShow(columns);
-                data.GenerateModel(columns);
-                data.GenerateController(columns);
-                data.GenerateJavaScript(columns);
+                data.GenerateIndex(columns, variables);
+                data.GenerateEdit(columns, variables);
+                data.GenerateCreate(columns, variables);
+                data.GenerateShow(columns, variables);
+                data.GenerateModel(columns, variables);
+                data.GenerateController(columns, variables);
+                data.GenerateJavaScript(columns, variables);
             } catch (Exception ex) {
                 MessageBox.Show("Error while generating the views.\r\nError:" + ex.Message);
             }

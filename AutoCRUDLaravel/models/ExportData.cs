@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 
@@ -34,32 +35,45 @@ namespace AutoCRUDLaravel.models {
         public string ShowColumnSelect { get; set; }
         public string ShowColumnText { get; set; }
 
-        public void GenerateIndex(List<Column> columns) {
-
+        public void GenerateIndex(List<Column> columns, ObservableCollection<GeneratorVariables> variables) {
+            Index = ReplaceText(Index, variables);
         }
 
-        public void GenerateShow(List<Column> columns) {
-
+        public void GenerateShow(List<Column> columns, ObservableCollection<GeneratorVariables> variables) {
+            Show = ReplaceText(Show, variables);
         }
 
-        public void GenerateCreate(List<Column> columns) {
-
+        public void GenerateCreate(List<Column> columns, ObservableCollection<GeneratorVariables> variables) {
+            Create = ReplaceText(Create, variables);
         }
 
-        public void GenerateEdit(List<Column> columns) {
-
+        public void GenerateEdit(List<Column> columns, ObservableCollection<GeneratorVariables> variables) {
+            Edit = ReplaceText(Edit, variables);
         }
 
-        public void GenerateController(List<Column> columns) {
-
+        public void GenerateController(List<Column> columns, ObservableCollection<GeneratorVariables> variables) {
+            Controller = ReplaceText(Controller, variables);
         }
 
-        public void GenerateModel(List<Column> columns) {
-
+        public void GenerateModel(List<Column> columns, ObservableCollection<GeneratorVariables> variables) {
+            Model = ReplaceText(Model, variables);
         }
 
-        public void GenerateJavaScript(List<Column> columns) {
+        public void GenerateJavaScript(List<Column> columns, ObservableCollection<GeneratorVariables> variables) {
+            JavaScript = ReplaceText(JavaScript, variables);
+        }
 
+        private string ReplaceText(string text, ObservableCollection<GeneratorVariables> variables) {
+            if (string.IsNullOrEmpty(text))
+                return "";
+
+            foreach (GeneratorVariables variable in variables) {
+                if (string.IsNullOrEmpty(variable.FileVariable))
+                    continue;
+
+                text.Replace(variable.FileVariable, variable.EquivalenceVariable);
+            }
+            return text;
         }
 
         public void ReadColumnTemplates(string main_path_form, string main_path_show) {
