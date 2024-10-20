@@ -1,9 +1,12 @@
-﻿using AutoCRUDLaravel.models;
+﻿using AutoCRUDLaravel.Enums;
+using AutoCRUDLaravel.Models;
+using AutoCRUDLaravel.Utils;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace AutoCRUDLaravel {
+namespace AutoCRUDLaravel.UI {
     /// <summary>
     /// Interação lógica para UCColumns.xam
     /// </summary>
@@ -17,28 +20,32 @@ namespace AutoCRUDLaravel {
             }
         }
 
-        public UCColumns(string table) {
+        public UCColumns(Connection table, List<Column> columns) {
             InitializeComponent();
 
-            tbTable.Text = table;
-            tbUsername.Text = DbConnection.Instance().Username;
-            tbDatabase.Text = DbConnection.Instance().DatabaseName;
+            tbTable.Text = table.Table;
+            tbUsername.Text = DbConnection.Instance().Connection.Username;
+            tbDatabase.Text = DbConnection.Instance().Connection.Database;
 
-            var (columns, errorMessage) = DbConnection.Instance().GetColumns(table);
-            if (columns == null)
-                MessageBox.Show(errorMessage);
+            if (columns.Count > 0) {
+                dgColumns.ItemsSource = columns;
+            } else {
+                var (columnsDB, errorMessage) = DbConnection.Instance().GetColumns(table.Table);
+                if (columnsDB == null)
+                    MessageBox.Show(errorMessage);
+                dgColumns.ItemsSource = columnsDB;
+            }
 
             this.Loaded += (sender, e) => {
-                dgColumns.ItemsSource = columns;
-                cbType.ItemsSource = ColumnType.GetAllColumnTypes();
+                cbType.ItemsSource = Enum.GetValues(typeof(ColumnTypeEnum));
                 if (dgColumns.Items != null && dgColumns.Items.Count > 0) {
                     dgColumns.SelectedItem = dgColumns.Items[0];
-                    Show_Click(this, null);
+                    View_Click(this, null);
                 }
             };
         }
 
-        private void Show_Click(object sender, RoutedEventArgs e) {
+        private void View_Click(object sender, RoutedEventArgs e) {
             if (dgColumns.SelectedItem == null)
                 return;
 
@@ -48,7 +55,7 @@ namespace AutoCRUDLaravel {
             cbVisibleCreate.IsChecked = selectedItem.IsVisibleCreate;
             cbVisibleIndex.IsChecked = selectedItem.IsVisibleIndex;
             cbVisibleEdit.IsChecked = selectedItem.IsVisibleEdit;
-            cbVisibleShow.IsChecked = selectedItem.IsVisibleShow;
+            cbVisibleView.IsChecked = selectedItem.IsVisibleView;
             tbFieldTitle.Text = selectedItem.FieldTitle;
             tbPlaceholder.Text = selectedItem.PlaceHolder;
             cbNullable.IsChecked = selectedItem.IsNullable;
@@ -59,8 +66,8 @@ namespace AutoCRUDLaravel {
             tbSelectArray.Text = selectedItem.SelectArray;
             tbDateFormat.Text = selectedItem.DateFormat;
 
-            foreach (ColumnType type in cbType.ItemsSource) {
-                if (type.Type == selectedItem.Type.Type)
+            foreach (ColumnTypeEnum type in cbType.ItemsSource) {
+                if (type == selectedItem.Type)
                     cbType.SelectedItem = type;
             }
         }
@@ -84,26 +91,26 @@ namespace AutoCRUDLaravel {
             lblDateFormat.Visibility = Visibility.Collapsed;
             tbDateFormat.Visibility = Visibility.Collapsed;
 
-            switch (((ColumnType)cbType.SelectedItem).Type) {
-                case ColumnType.TypeEnum.NUMERIC_DOUBLE:
-                case ColumnType.TypeEnum.NUMERIC_INT:
+            switch ((ColumnTypeEnum)cbType.SelectedItem) {
+                case ColumnTypeEnum.NUMERIC_DOUBLE:
+                case ColumnTypeEnum.NUMERIC_INT:
                     cbUnsigned.Visibility = Visibility.Visible;
                     break;
-                case ColumnType.TypeEnum.SELECT_ENUM:
+                case ColumnTypeEnum.SELECT_ENUM:
                     tbSelectEnum.Visibility = Visibility.Visible;
                     lblSelectEnum.Visibility = Visibility.Visible;
                     break;
-                case ColumnType.TypeEnum.TEXT:
+                case ColumnTypeEnum.TEXT:
                     lblMaxLength.Visibility = Visibility.Visible;
                     tbMaxLength.Visibility = Visibility.Visible;
                     break;
-                case ColumnType.TypeEnum.SELECT_ARRAY:
+                case ColumnTypeEnum.SELECT_ARRAY:
                     lblSelectArray.Visibility = Visibility.Visible;
                     tbSelectArray.Visibility = Visibility.Visible;
                     break;
-                case ColumnType.TypeEnum.DATETIME:
-                case ColumnType.TypeEnum.DATE:
-                case ColumnType.TypeEnum.TIME:
+                case ColumnTypeEnum.DATETIME:
+                case ColumnTypeEnum.DATE:
+                case ColumnTypeEnum.TIME:
                     lblDateFormat.Visibility = Visibility.Visible;
                     tbDateFormat.Visibility = Visibility.Visible;
                     break;
@@ -122,12 +129,12 @@ namespace AutoCRUDLaravel {
                     item.IsVisibleCreate = cbVisibleCreate.IsChecked == true;
                     item.IsVisibleIndex = cbVisibleIndex.IsChecked == true;
                     item.IsVisibleEdit = cbVisibleEdit.IsChecked == true;
-                    item.IsVisibleShow = cbVisibleShow.IsChecked == true;
+                    item.IsVisibleView = cbVisibleView.IsChecked == true;
                     item.FieldTitle = tbFieldTitle.Text;
                     item.PlaceHolder = tbPlaceholder.Text;
                     if (cbType.SelectedItem != null)
-                        if (cbType.SelectedItem is ColumnType)
-                            item.Type = (ColumnType)cbType.SelectedItem;
+                        if (cbType.SelectedItem is ColumnTypeEnum)
+                            item.Type = (ColumnTypeEnum)cbType.SelectedItem;
                     item.IsNullable = cbNullable.IsChecked == true;
                     item.Unsigned = cbUnsigned.IsChecked == true;
                     item.DefaultValue = tbDefaultValue.Text;

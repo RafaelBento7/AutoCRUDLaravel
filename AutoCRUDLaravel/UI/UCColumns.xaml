@@ -1,9 +1,10 @@
-﻿<UserControl x:Class="AutoCRUDLaravel.UCColumns"
+﻿<UserControl x:Class="AutoCRUDLaravel.UI.UCColumns"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:AutoCRUDLaravel"
+             xmlns:local="clr-namespace:AutoCRUDLaravel.UI"
+             xmlns:utils="clr-namespace:AutoCRUDLaravel.Utils"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -14,6 +15,10 @@
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}"
              d:DesignHeight="700" d:DesignWidth="975">
+    <UserControl.Resources>
+        <utils:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MaxWidth="575"/>
@@ -55,14 +60,14 @@
                             </DataGridTemplateColumn.CellStyle>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Click="Show_Click" Style="{StaticResource MaterialDesignIconButton}" Width="30" Height="30">
+                                    <Button Click="View_Click" Style="{StaticResource MaterialDesignIconButton}" Width="30" Height="30">
                                         <materialDesign:PackIcon Kind="Eye" Width="30" Height="24"/>
                                     </Button>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                        <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
+                        <DataGridTextColumn Header="Type" Binding="{Binding Path=Type, Converter={StaticResource EnumDescriptionConverter}}"/>
                         <DataGridCheckBoxColumn Binding="{Binding IsVisibleIndex}">
                             <DataGridCheckBoxColumn.Header>
                                 <StackPanel HorizontalAlignment="Center">
@@ -109,7 +114,7 @@
                         <CheckBox Content="Visible on Create" Margin="0,10,0,0" x:Name="cbVisibleCreate"/>
                         <CheckBox Content="Visible on Index" x:Name="cbVisibleIndex"/>
                         <CheckBox Content="Visible on Edit" x:Name="cbVisibleEdit"/>
-                        <CheckBox Content="Visible on Show" x:Name="cbVisibleShow"/>
+                        <CheckBox Content="Visible on View" x:Name="cbVisibleView"/>
 
                         <TextBlock Text="Field Title" x:Name="lblTitle" Margin="0,10,0,0"/>
                         <TextBox x:Name="tbFieldTitle" Margin="0,10,0,0" Style="{StaticResource SmallOutlinedTextBox}" materialDesign:HintAssist.Hint="Field Title" materialDesign:HintAssist.IsFloating="False"/>
@@ -118,7 +123,13 @@
                         <TextBox x:Name="tbPlaceholder" Margin="0,10,0,0" Style="{StaticResource SmallOutlinedTextBox}" materialDesign:HintAssist.Hint="Placeholder" materialDesign:HintAssist.IsFloating="False"/>
 
                         <TextBlock Text="Type" x:Name="lblType" Margin="0,10,0,0"/>
-                        <ComboBox x:Name="cbType" Margin="0,10,0,0" Style="{StaticResource SmallOutlinedComboBox}" materialDesign:HintAssist.Hint="Type" SelectionChanged="cbType_SelectionChanged" materialDesign:HintAssist.IsFloating="False"/>
+                        <ComboBox x:Name="cbType" Margin="0,10,0,0" Style="{StaticResource SmallOutlinedComboBox}" materialDesign:HintAssist.Hint="Type" SelectionChanged="cbType_SelectionChanged" materialDesign:HintAssist.IsFloating="False">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
 
                         <CheckBox Content="Nullable" x:Name="cbNullable" Margin="0,10,0,0"/>
 

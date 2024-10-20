@@ -1,4 +1,4 @@
-﻿using AutoCRUDLaravel.models;
+﻿using AutoCRUDLaravel.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace AutoCRUDLaravel {
+namespace AutoCRUDLaravel.UI {
     /// <summary>
     /// Interação lógica para UCExport.xam
     /// </summary>
@@ -18,43 +18,41 @@ namespace AutoCRUDLaravel {
             JAVASCRIPT,
             INDEX,
             CREATE,
-            SHOW,
+            View,
             EDIT
         }
 
-        public ExportData Data { get; }
+        public ExportData Data { get; set; }
 
         private readonly string templatesPath;
         private readonly string columnsFormsTemplatePath;
-        private readonly string columnsShowTemplatePath;
+        private readonly string columnsViewTemplatePath;
 
         private View currentView;
 
-        private ExportData data;
-
-        public UCExport(List<Column> columns, ObservableCollection<GeneratorVariables> variables) {
+        public UCExport(List<Column> columns, ObservableCollection<ReplaceVariable> variables) {
             InitializeComponent();
-            SetView(currentView);
 
-            templatesPath = Path.Combine(Environment.CurrentDirectory, "templates");
-            columnsFormsTemplatePath = Path.Combine(templatesPath, "columns_template_create_edit");
-            columnsShowTemplatePath = Path.Combine(templatesPath, "columns_template_show");
+            templatesPath = Path.Combine(Environment.CurrentDirectory, "Templates");
+            columnsFormsTemplatePath = Path.Combine(templatesPath, "ColumnsForm");
+            columnsViewTemplatePath = Path.Combine(templatesPath, "ColumnsView");
 
             GenerateViews(columns, variables);
+            SetView(currentView);
         }
 
-        private void GenerateViews(List<Column> columns, ObservableCollection<GeneratorVariables> variables) {
+        private void GenerateViews(List<Column> columns, ObservableCollection<ReplaceVariable> variables) {
             try {
-                ExportData data = new ExportData();
-                data.ReadColumnTemplates(columnsFormsTemplatePath, columnsShowTemplatePath);
-                data.ReadTemplates(templatesPath);
-                data.GenerateIndex(columns, variables);
-                data.GenerateEdit(columns, variables);
-                data.GenerateCreate(columns, variables);
-                data.GenerateShow(columns, variables);
-                data.GenerateModel(columns, variables);
-                data.GenerateController(columns, variables);
-                data.GenerateJavaScript(columns, variables);
+                Data = new ExportData();
+                Data.ReadColumnTemplates(columnsFormsTemplatePath, columnsViewTemplatePath);
+                Data.ReadTemplates(templatesPath);
+                Data.GenerateIndex(columns, variables);
+                Data.GenerateEdit(columns, variables);
+                Data.GenerateCreate(columns, variables);
+                Data.GenerateView(columns, variables);
+                Data.GenerateModel(columns, variables);
+                Data.GenerateController(columns, variables);
+                Data.GenerateJavaScript(columns, variables);
             } catch (Exception ex) {
                 MessageBox.Show("Error while generating the views.\r\nError:" + ex.Message);
             }
@@ -68,37 +66,37 @@ namespace AutoCRUDLaravel {
             colorJavaScript.Visibility = Visibility.Hidden;
             colorIndex.Visibility = Visibility.Hidden;
             colorCreate.Visibility = Visibility.Hidden;
-            colorShow.Visibility = Visibility.Hidden;
+            colorView.Visibility = Visibility.Hidden;
             colorEdit.Visibility = Visibility.Hidden;
 
             switch (currentView) {
                 case View.MODEL:
                     colorModel.Visibility = Visibility.Visible;
-                    tbPreview.Text = data.Model;
+                    tbPreview.Text = Data.Model;
                     break;
                 case View.CONTROLLER:
                     colorController.Visibility = Visibility.Visible;
-                    tbPreview.Text = data.Controller;
+                    tbPreview.Text = Data.Controller;
                     break;
                 case View.JAVASCRIPT:
                     colorJavaScript.Visibility = Visibility.Visible;
-                    tbPreview.Text = data.JavaScript;
+                    tbPreview.Text = Data.JavaScript;
                     break;
                 case View.INDEX:
                     colorIndex.Visibility = Visibility.Visible;
-                    tbPreview.Text = data.Index;
+                    tbPreview.Text = Data.Index;
                     break;
                 case View.CREATE:
                     colorCreate.Visibility = Visibility.Visible;
-                    tbPreview.Text = data.Create;
+                    tbPreview.Text = Data.Create;
                     break;
-                case View.SHOW:
-                    colorShow.Visibility = Visibility.Visible;
-                    tbPreview.Text = data.Show;
+                case View.View:
+                    colorView.Visibility = Visibility.Visible;
+                    tbPreview.Text = Data.View;
                     break;
                 case View.EDIT:
                     colorEdit.Visibility = Visibility.Visible;
-                    tbPreview.Text = data.Edit;
+                    tbPreview.Text = Data.Edit;
                     break;
             }
         }
@@ -125,8 +123,8 @@ namespace AutoCRUDLaravel {
             SetView(View.CREATE);
         }
 
-        private void Show_PreviewMouseDown(object sender, MouseButtonEventArgs e) {
-            SetView(View.SHOW);
+        private void View_PreviewMouseDown(object sender, MouseButtonEventArgs e) {
+            SetView(View.View);
         }
 
         private void Edit_PreviewMouseDown(object sender, MouseButtonEventArgs e) {

@@ -1,11 +1,14 @@
-﻿using AutoCRUDLaravel.models;
+﻿using AutoCRUDLaravel.Enums;
+using AutoCRUDLaravel.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoCRUDLaravel {
+namespace AutoCRUDLaravel.Utils {
     internal static class Extensions {
         internal static int ToInt(this string value) {
             if (int.TryParse(value, out int result))
@@ -40,32 +43,33 @@ namespace AutoCRUDLaravel {
             return false;
         }
 
-        internal static ColumnType ToColumnType(this string value) {
+        internal static ColumnTypeEnum ToColumnType(this string value) {
             if (string.IsNullOrEmpty(value))
-                return ColumnType.GetColumnType(ColumnType.TypeEnum.NONE);
+                return ColumnTypeEnum.NONE;
 
             switch (value.ToUpper()) {
                 case "VARCHAR":
-                    return ColumnType.GetColumnType(ColumnType.TypeEnum.TEXT);
+                case "CHAR":
+                    return ColumnTypeEnum.TEXT;
                 case "FLOAT":
                 case "DOUBLE":
-                    return ColumnType.GetColumnType(ColumnType.TypeEnum.NUMERIC_INT);
+                    return ColumnTypeEnum.NUMERIC_INT;
                 case "SELECT":
-                    return ColumnType.GetColumnType(ColumnType.TypeEnum.SELECT_ARRAY);
+                    return ColumnTypeEnum.SELECT_ARRAY;
                 case "ENUM":
-                    return ColumnType.GetColumnType(ColumnType.TypeEnum.SELECT_ENUM);
+                    return ColumnTypeEnum.SELECT_ENUM;
                 case "DATETIME":
-                    return ColumnType.GetColumnType(ColumnType.TypeEnum.DATETIME);
+                    return ColumnTypeEnum.DATETIME;
                 case "DATE":
-                    return ColumnType.GetColumnType(ColumnType.TypeEnum.DATE);
+                    return ColumnTypeEnum.DATE;
                 case "TIME":
-                    return ColumnType.GetColumnType(ColumnType.TypeEnum.TIME);
+                    return ColumnTypeEnum.TIME;
                 case "INT":
-                    return ColumnType.GetColumnType(ColumnType.TypeEnum.NUMERIC_INT);
+                    return ColumnTypeEnum.NUMERIC_INT;
                 case "TINYINT":
-                    return ColumnType.GetColumnType(ColumnType.TypeEnum.BOOLEAN);
+                    return ColumnTypeEnum.BOOLEAN;
                 default:
-                    return ColumnType.GetColumnType(ColumnType.TypeEnum.NONE);
+                    return ColumnTypeEnum.NONE;
             }
         }
 
@@ -77,6 +81,14 @@ namespace AutoCRUDLaravel {
                     return false;
             }
             return true;
+        }
+
+        internal static string GetEnumDescription(this Enum value) {
+            if (value.GetType().GetField(value.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false) is DescriptionAttribute[] attributes && attributes.Any()) {
+                return attributes.First().Description;
+            }
+
+            return value.ToString();
         }
     }
 }

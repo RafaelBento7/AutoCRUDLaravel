@@ -1,10 +1,10 @@
-﻿<UserControl x:Class="AutoCRUDLaravel.UCExport"
+﻿<UserControl x:Class="AutoCRUDLaravel.UI.UCExport"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-            xmlns:local="clr-namespace:AutoCRUDLaravel"
+            xmlns:local="clr-namespace:AutoCRUDLaravel.UI"
             mc:Ignorable="d" 
             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
             TextElement.FontWeight="Regular"
@@ -73,10 +73,10 @@
                     <materialDesign:PackIcon Width="18" Height="14" Kind="PlusCircle" Margin="10,12,5,0" Foreground="{StaticResource MaterialDesignPaper}"/>
                     <TextBlock Text="Create" Padding="0,10,10,10" FontSize="14" Foreground="{StaticResource MaterialDesignPaper}"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource stackPanelHover}" x:Name="stackPanelShow" PreviewMouseDown="Show_PreviewMouseDown">
-                    <materialDesign:ColorZone Mode="Inverted" Height="41" Width="3" Visibility="Hidden" x:Name="colorShow"/>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource stackPanelHover}" x:Name="stackPanelView" PreviewMouseDown="View_PreviewMouseDown">
+                    <materialDesign:ColorZone Mode="Inverted" Height="41" Width="3" Visibility="Hidden" x:Name="colorView"/>
                     <materialDesign:PackIcon Width="18" Height="14" Kind="Eye" Margin="10,12,5,0" Foreground="{StaticResource MaterialDesignPaper}"/>
-                    <TextBlock Text="Show" Padding="0,10,10,10" FontSize="14" Foreground="{StaticResource MaterialDesignPaper}"/>
+                    <TextBlock Text="View" Padding="0,10,10,10" FontSize="14" Foreground="{StaticResource MaterialDesignPaper}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,0" Style="{StaticResource stackPanelHover}" x:Name="stackPanelEdit" PreviewMouseDown="Edit_PreviewMouseDown">
                     <materialDesign:ColorZone Mode="Inverted" Height="41" Width="3" Visibility="Hidden" x:Name="colorEdit"/>

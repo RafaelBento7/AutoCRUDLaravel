@@ -1,4 +1,5 @@
-﻿using AutoCRUDLaravel.models;
+﻿using AutoCRUDLaravel.Models;
+using AutoCRUDLaravel.Utils;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -16,33 +17,50 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AutoCRUDLaravel {
+namespace AutoCRUDLaravel.UI {
     /// <summary>
     /// Interação lógica para UCGeneral.xam
     /// </summary>
     public partial class UCGeneral : UserControl {
-        public string Table { get { return cbTable.Text; } }
-        public string Server { get { return tbServer.Text; } }
-        public string Port { get { return tbPort.Text; } }
-        public string Username { get { return tbUsername.Text; } }
-        public string Database { get { return tbDatabase.Text; } }
+        public string Table => cbTable.Text;
+        public string Server => tbServer.Text;
+        public string Port => tbPort.Text;
+        public string Username => tbUsername.Text;
+        public string Password => tbPassword.Password;
+        public string Database => tbDatabase.Text;
 
-        public ObservableCollection<GeneratorVariables> Variables { get { return list; } }
+        public ObservableCollection<ReplaceVariable> Variables { get { return list; } }
 
 
-        private ObservableCollection<GeneratorVariables> list;
+        private ObservableCollection<ReplaceVariable> list;
 
-        public UCGeneral() {
+        public UCGeneral(Connection connection, ObservableCollection<ReplaceVariable> variables) {
             InitializeComponent();
             this.Loaded += (sender, e) => {
                 SnackbarError.MessageQueue = new SnackbarMessageQueue(TimeSpan.FromSeconds(3));
                 SnackbarSuccess.MessageQueue = new SnackbarMessageQueue(TimeSpan.FromSeconds(3));
-                tbServer.Text = Settings.Server;
-                tbPort.Text = Settings.Port;
-                tbUsername.Text = Settings.Username;
-                tbDatabase.Text = Settings.Database;
-                list = GeneratorVariables.GetVariables();
-                list.Insert(0, new GeneratorVariables("{columns}", "Display the columns based on the templates (Create/Edit/Show views)", true));
+                tbServer.Text = connection.Server;
+                tbPort.Text = connection.Port == 0 ? string.Empty : connection.Port.ToString();
+                tbUsername.Text = connection.Username;
+                tbPassword.Password = connection.Password;
+                tbDatabase.Text = connection.Database;
+
+
+                if (DbConnection.Instance().IsConnected) {
+                    cbTable.IsEnabled = true;
+                    btUpdateTables.IsEnabled = true;
+                    cbTable.ItemsSource = null;
+                    UpdateTables_Click(btUpdateTables, null);
+                    if (!string.IsNullOrEmpty(connection.Table)) {
+                        foreach (string table in cbTable.Items) 
+                            if (table.Equals(connection.Table))
+                                cbTable.SelectedItem = table;
+                    }
+                    list = variables;
+                } else {
+                    list = ReplaceVariable.GetVariables();
+                    list.Insert(0, new ReplaceVariable("{columns}", "Display the columns based on the templates (Create/Edit/View views)", true));
+                }
                 dgVariables.ItemsSource = list;
             };
         }
@@ -55,12 +73,15 @@ namespace AutoCRUDLaravel {
                 return;
             }
 
-            connection.Server = tbServer.Text;
-            connection.Port = tbPort.Text.ToInt();
-            connection.Username = tbUsername.Text;
-            connection.DatabaseName = tbDatabase.Text;
+            connection.Connection = new Connection {
+                Server = tbServer.Text,
+                Port = tbPort.Text.ToInt(),
+                Username = tbUsername.Text,
+                Password = tbPassword.Password,
+                Database = tbDatabase.Text
+            };
 
-            (bool isConnected, string errorConnecting) = connection.Connect(tbPassword.Password);
+            (bool isConnected, string errorConnecting) = connection.Connect();
             if (isConnected) {
                 cbTable.IsEnabled = true;
                 btUpdateTables.IsEnabled = true;
@@ -94,14 +115,15 @@ namespace AutoCRUDLaravel {
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e) {
-            if (dgVariables.SelectedItem == null || !(dgVariables.SelectedItem is GeneratorVariables item))
+            if (dgVariables.SelectedItem == null || !(dgVariables.SelectedItem is ReplaceVariable item))
                 return;
 
             list.Remove(item);
         }
 
         private void NewVariable_Click(object sender, RoutedEventArgs e) {
-            list.Add(new GeneratorVariables("{variable}", "value"));
+            list.Add(new ReplaceVariable("{variable}", "value"));
+            dgVariables.ScrollIntoView(dgVariables.Items[dgVariables.Items.Count - 1]);
         }
     }
 }

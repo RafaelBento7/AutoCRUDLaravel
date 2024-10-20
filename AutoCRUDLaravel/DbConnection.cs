@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AutoCRUDLaravel.models;
+using AutoCRUDLaravel.Models;
+using AutoCRUDLaravel.Utils;
+using AutoCRUDLaravel.Enums;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 
@@ -12,17 +14,14 @@ namespace AutoCRUDLaravel {
 
         public bool IsConnected {
             get {
-                return Connection != null && (
-                    Connection.State == System.Data.ConnectionState.Open ||
-                    Connection.State == System.Data.ConnectionState.Fetching ||
-                    Connection.State == System.Data.ConnectionState.Executing);
+                return SqlConnection != null && (
+                    SqlConnection.State == System.Data.ConnectionState.Open ||
+                    SqlConnection.State == System.Data.ConnectionState.Fetching ||
+                    SqlConnection.State == System.Data.ConnectionState.Executing);
             }
         }
-        public string Server { get; set; }
-        public int Port { get; set; }
-        public string DatabaseName { get; set; }
-        public string Username { get; set; }
-        public MySqlConnection Connection { get; set; }
+        public Connection Connection { get; set; }
+        public MySqlConnection SqlConnection { get; set; }
 
         private static DbConnection _instance = null;
 
@@ -35,13 +34,13 @@ namespace AutoCRUDLaravel {
         public (List<string> tables, string errorMessage) GetTables() {
 
             List<string> tables = new List<string>();
-            string query = $"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '{DatabaseName}'; ";
+            string query = $"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '{Connection.Database}'; ";
 
             try {
                 if (!IsConnected)
                     throw new Exception("Not connected");
 
-                using (MySqlCommand command = new MySqlCommand(query, Connection)) {
+                using (MySqlCommand command = new MySqlCommand(query, SqlConnection)) {
                     using (MySqlDataReader reader = command.ExecuteReader()) {
                         while (reader.Read()) {
                             tables.Add(reader["TABLE_NAME"].ToString());
@@ -57,13 +56,13 @@ namespace AutoCRUDLaravel {
 
         public (List<Column> columns, string errorMessage) GetColumns(string tableName) {
             string query = $"SELECT COLUMN_NAME, ORDINAL_POSITION, COLUMN_DEFAULT, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, COLUMN_KEY " +
-                           $"FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '{DatabaseName}' AND TABLE_NAME = '{tableName}' ORDER BY ORDINAL_POSITION";
+                           $"FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '{Connection.Database}' AND TABLE_NAME = '{tableName}' ORDER BY ORDINAL_POSITION";
             List<Column> columns = new List<Column>();
             try {
                 if (!IsConnected)
                     throw new Exception("Not connected");
 
-                using (MySqlCommand command = new MySqlCommand(query, Connection)) {
+                using (MySqlCommand command = new MySqlCommand(query, SqlConnection)) {
                     using (MySqlDataReader reader = command.ExecuteReader()) {
                         while (reader.Read()) {
                             Column column = new Column() {
@@ -83,12 +82,10 @@ namespace AutoCRUDLaravel {
                             } else if (columnKey.ToUpper() == "PRI") {
                                 column.IsForeignKey = false;
                                 column.IsPrimaryKey = true;
-                                column.IsVisibleEdit = false;
-                                column.IsVisibleCreate = false;
                             } else if (columnKey.ToUpper() == "MUL" || (!string.IsNullOrEmpty(column.Name) && column.Name.ToUpper().EndsWith("_ID"))) {
                                 column.IsPrimaryKey = false;
                                 column.IsForeignKey = true;
-                                column.Type = ColumnType.GetColumnType(ColumnType.TypeEnum.SELECT_ARRAY);
+                                column.Type = ColumnTypeEnum.SELECT_ARRAY;
                             }
 
                             string columnName = reader["COLUMN_NAME"].ToString();
@@ -103,7 +100,7 @@ namespace AutoCRUDLaravel {
         }
 
         public (bool isValid, string errorMessage) Validate(string server, string port, string username, string database) {
-            if (IsConnected && Server == server && Port == port.ToInt() && Username == username) {
+            if (IsConnected && Connection != null && Connection.Server == server && Connection.Port == port.ToInt() && Connection.Username == username) {
                 return (true, null);
             }
 
@@ -130,14 +127,14 @@ namespace AutoCRUDLaravel {
             return (true, null);
         }
 
-        public (bool isConnected, string errorMessage) Connect(string password) {
-            Connection = null;
+        public (bool isConnected, string errorMessage) Connect() {
+            SqlConnection = null;
             try {
-                string connstring = string.Format("Server={0}; port={1}; database={2}; UID={3}; password={4}", Server, Port, DatabaseName, Username, password);
-                Connection = new MySqlConnection(connstring);
-                Connection.Open();
+                string connstring = string.Format("Server={0}; port={1}; database={2}; UID={3}; password={4}", Connection.Server, Connection.Port, Connection.Database, Connection.Username, Connection.Password);
+                SqlConnection = new MySqlConnection(connstring);
+                SqlConnection.Open();
             } catch (Exception ex) {
-                Connection = null;
+                SqlConnection = null;
                 return (false, ex.Message);
             }
 
@@ -145,10 +142,10 @@ namespace AutoCRUDLaravel {
         }
 
         public void Close() {
-            if (Connection.State == System.Data.ConnectionState.Broken ||
-                Connection.State == System.Data.ConnectionState.Closed ||
-                Connection.State == System.Data.ConnectionState.Fetching) {
-                Connection.Close();
+            if (SqlConnection.State == System.Data.ConnectionState.Broken ||
+                SqlConnection.State == System.Data.ConnectionState.Closed ||
+                SqlConnection.State == System.Data.ConnectionState.Fetching) {
+                SqlConnection.Close();
             }
         }
     }
